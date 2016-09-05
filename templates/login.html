@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  {% include 'header.html' %}
+  <body class="loginregbody">
+    <div class="container">
+      <form class="form-info">
+        <h2 class="form-info-heading">请登录</h2>
+          <label for="username" class="sr-only" >学号：</label>
+          <input class="form-control" id="username" type="text" placeholder="用户名">
+          <label for="passwd" class="sr-only" >密码：</label>
+          <input class="form-control" id="passwd" type="password" placeholder="密码">  
+          <button type="button" class="btn btn-lg btn-primary btn-block" onclick="login()">登录</button>
+          <a href="/register">注册</a></td>
+          <a href="/getusername">找回用户名</a></td>
+      </form>
+    </div>
+  </body>
+  
+</html>

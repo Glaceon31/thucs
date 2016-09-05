@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  {% include 'header.html' %}
+  <body class="loginregbody">
+    <div class="container">
+      <form class="form-info" style="max-width: 400px">
+        <h2 class="form-info-heading">注册新用户</h2>
+          <label for="username" class="sr-only" >学号：</label>
+          学号：<input class="form-control" id="username" type="text" >
+          <label for="passwd" class="sr-only" >密码：</label>
+          密码：<input class="form-control" id="passwd" type="password" style="margin-bottom:0px" placeholder="至少8位">  
+          <label for="repasswd" class="sr-only" >确认密码：</label>
+          确认密码：<input class="form-control" id="repasswd" type="password" style="margin-bottom:0px">
+          <label for="name" class="sr-only" >姓名：</label>
+          姓名：<input class="form-control" id="name" type="text" placeholder="注册后不可修改"> 
+          
+          <label for="email" class="sr-only" >邀请码：</label>
+          邀请码：<input class="form-control" id="email" type="text"> 
+
+          <button type="button" class="btn btn-lg btn-primary btn-block" onclick="register()">注册</button>
+          <a href="/login">返回</a>
+      </form>
+    </div>
+  </body>
+  
+</html>
