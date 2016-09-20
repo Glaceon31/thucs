@@ -3,15 +3,34 @@
   {% include 'header.html' %}
   <body class="loginregbody">
     <div class="container">
-      <form class="form-info">
-        <h2 class="form-info-heading">请登录</h2>
-          <label for="username" class="sr-only" >学号：</label>
-          <input class="form-control" id="username" type="text" placeholder="用户名">
-          <label for="passwd" class="sr-only" >密码：</label>
-          <input class="form-control" id="passwd" type="password" placeholder="密码">  
-          <button type="button" class="btn btn-lg btn-primary btn-block" onclick="login()">登录</button>
-          <a href="/register">注册</a></td>
-          <a href="/getusername">找回用户名</a></td>
+      <form class="form-horizontal form-info" style="max-width: 400px">
+        <fieldset>
+          <div id="legend" class="">
+        <legend class="">登录</legend>
+        </div>
+        <!-- Text input-->
+        <div class="control-group">
+          <label class="control-label" for="input01">学号</label>
+          <div class="controls">
+            <input type="text" placeholder="" class="input-xlarge" id="username" >
+            <p class="help-block"></p>
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="control-group">
+          <label class="control-label" for="input01">密码</label>
+          <div class="controls">
+            <input placeholder="" class="input-xlarge" id="passwd" type="password" >
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button type="button" class="btn btn-primary btn-block" onclick="login()">登录</button>
+          <a href="/register">注册</a>
+        </div>
+          </td>
+        </fieldset>
       </form>
     </div>
   </body>

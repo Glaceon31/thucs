@@ -58,6 +58,9 @@ def userregister():
     if not checknumber(data['username']):
         result['message'] = u'用户名只能包含字母、数字和下划线'
         return json.dumps(result)
+    if data['code'] != 'thucs':
+        result['message'] = u'邀请码错误'
+        return json.dumps(result)
     #db
     try:
         #same username
@@ -161,25 +164,28 @@ def getuserinfo():
         if tmp['token'] != data['token']:
             result['message'] = u'请重新登录'
             return json.dumps(result)
+        userinfolist = ['name','class','sex','school_roll','political','grade','suo'
+                ,'ethnic','mas_doc','mentor','email', 'postcode','address','mobile']
         for i in userinfolist:
             if not tmp.has_key(i):
                 tmp[i] = ''
             result[i] = tmp[i]
+        '''
         for i in userinfolist_time:
             if not tmp.has_key(i):
                 tmp[i] = ''
             if isinstance(tmp[i],datetime.datetime):
                 tmp[i] += datetime.timedelta(hours=8) 
             result[i] = str(tmp[i])[0:19]
-        if not tmp.has_key('applied'):
-            tmp['applied'] = False
-        result['applied'] = tmp['applied']
+        '''
 
         result['success'] = 1
         return json.dumps(result)
     except:
         traceback.print_exc()
         return json.dumps(result)
+
+
 
 @app.route('/userlogout', methods=['POST'])
 def userlogout(jsondata):
@@ -239,7 +245,19 @@ def usermodify():
         return json.dumps(result)
     else:
         try:
-            userdb.update_one({'username': data['username']}, {'$set':{'email' : data['email'], 'postcode':data['postcode'],'mobile':data['mobile'],'address':data['address']}})
+            infolist = ['name','class','sex','school_roll','political','grade','suo'
+                ,'ethnic','mas_doc','mentor','email', 'postcode','address','mobile']
+            update = {}
+            for info in infolist:
+                update[info] = data[info]
+            userdb.update_one({'username': data['username']}, 
+                {'$set':update})
+            '''
+            {'email' : data['email'], 
+                'postcode':data['postcode'],
+                'mobile':data['mobile'],
+                'address':data['address']}
+            '''
         except:
             traceback.print_exc()
             result['message'] = u'后台错误'

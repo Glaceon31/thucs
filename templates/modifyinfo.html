@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  {% include 'header.html' %}
+  <script type="text/javascript">
+  function getinfo(){
+    d = {}
+      d['userid'] = getCookie('useridthu')
+      d['username'] = getCookie('usernamethu')
+      d['token'] = getCookie('tokenthu')
+      $.ajax({
+      type:"POST",
+      url:"/getuserinfo",
+      data: d,
+      success:function getinfo_return(data){
+        result = JSON.parse(data)
+        if (result['success'] == 1){
+          document.getElementById('mobile').value=result['mobile']
+          document.getElementById('email').value=result['email']
+          document.getElementById('address').value=result['address']
+          document.getElementById('postcode').value=result['postcode']
+        }
+        else{
+        }
+      }
+    })
+  }
+  </script>
+  <body class="loginregbody" onload="showuserinfo()">
+    <div class="container">
+      <form class="form-horizontal form-info" style="max-width: 400px">
+        <fieldset>
+          <div id="legend" class="">
+        <legend class="">修改信息</legend>
+        </div>
+
+          <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">姓名</label>
+          <div class="controls">
+            <input type="text" placeholder="" class="input-xlarge" id="name" name="name" >
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">班级</label>
+          <div class="controls">
+            <input type="text" placeholder="" class="input-xlarge" id="class" name="class">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    
+
+    <div class="control-group">
+
+          <!-- Select Basic -->
+          <label class="control-label">性别</label>
+          <div class="controls">
+            <select class="input-xlarge" id="sex" name="sex">
+      <option value="男">男</option>
+      <option value="女">女</option></select>
+          </div>
+
+      </div>
+
+      <div class="control-group">
+
+          <!-- Select Basic -->
+          <label class="control-label">所</label>
+          <div class="controls">
+            <select class="input-xlarge" id="suo" name="suo">
+      <option value="人智所">人智所</option>
+      <option value="媒体所">媒体所</option>
+      <option value="软件所">软件所</option>
+      <option value="网络所">网络所</option>
+      <option value="高性能所">高性能所</option></select>
+          </div>
+
+      </div>
+
+      <div class="control-group">
+
+          <!-- Select Basic -->
+          <label class="control-label">年级</label>
+          <div class="controls">
+            <select class="input-xlarge" id="grade" name="grade">
+      <option value="硕一">硕一</option>
+      <option value="硕二">硕二</option>
+      <option value="硕三">硕三</option>
+      <option value="博一">博一</option>
+      <option value="博二">博二</option>
+      <option value="博三">博三</option>
+      <option value="博四">博四</option>
+      <option value="博五">博五</option></select>
+          </div>
+
+      </div>
+
+
+    <div class="control-group">
+
+          <!-- Select Basic -->
+          <label class="control-label">学籍状态</label>
+          <div class="controls">
+            <select class="input-xlarge" id="school_roll" name="school_roll">
+      <option value="计算机系">计算机系</option>
+      <option value="深圳研究院">深圳研究院</option>
+      <option value="其他">其他</option></select>
+          </div>
+
+        </div>
+
+    <div class="control-group">
+
+          <!-- Select Basic -->
+          <label class="control-label">政治面貌</label>
+          <div class="controls">
+            <select class="input-xlarge" id="political" name="political">
+      <option value="中共党员">中共党员</option>
+      <option value="预备党员">预备党员</option>
+      <option value="共青团员">共青团员</option>
+      <option value="群众">群众</option>
+      <option value="其他党派">其他党派</option></select>
+          </div>
+
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">民族</label>
+          <div class="controls">
+            <input type="text" placeholder="" class="input-xlarge" id="ethnic" name="ethnic">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Select Basic -->
+          <label class="control-label">硕博</label>
+          <div class="controls">
+            <select class="input-xlarge" id="mas_doc" name="mas_doc">
+      <option value="硕士">硕士</option>
+      <option value="博士">博士</option>
+      </select>
+          </div>
+
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">导师</label>
+          <div class="controls">
+            <input type="text" placeholder="" class="input-xlarge" id="mentor" name="mentor">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">邮箱</label>
+          <div class="controls">
+            <input type="text" placeholder="" class="input-xlarge" id="email" name="email">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">手机</label>
+          <div class="controls">
+            <input type="text" placeholder="" class="input-xlarge" id="mobile" name="mobile">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+      <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">地址</label>
+          <div class="controls">
+            <input type="text" placeholder="" class="input-xlarge" id="address" name="address">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">邮编</label>
+          <div class="controls">
+            <input type="text" placeholder="" class="input-xlarge" id="postcode" name="postcode">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+     
+      <div class="controls">
+          <button class="btn btn-primary btn-block" onclick="modify()">修改</button>
+          <a href="/mainpage">返回</a>
+      </div>
+    </fieldset>
+      </form>
+    </div>
+  </body>
+  
+</html>

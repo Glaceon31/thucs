@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+  {% include 'header.html' %}
+  <script type="text/javascript" src="/static/scholarship.js"></script>
+  <link rel="stylesheet" href="/static/scholarship.css" type="text/css">
+  <script type="text/javascript">
+  function init(){
+    getbasicinfo()
+    getscholarshipinfo()
+  }
+
+   
+  </script>
+
+  <body onload="checklogin();init();" style="padding-top: 40px">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+          <ul class="nav navbar-nav">
+            <li><a href="#">清华大学计算机系学生信息系统</a></li>
+         <li><a href="/mainpage">首页</a></li>
+         <li><a href="#">新闻</a></li>
+         <li class="active"><a href="/scholarship">奖学金</a></li>
+          </ul>
+      </div>
+    </nav>
+  
+
+ <div id="wrapper">
+
+  
+      {% include 'module_scholarshipsidenav.html' %}
+        
+      <div id="page-content-wrapper">
+        
+        <div >
+          {% include 'module_scholarshipform.html' %}
+          
+        </div>
+
+      </div>
+  </div>
+
+
+ 	</body>
+  
+</html>

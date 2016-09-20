@@ -12,6 +12,7 @@ function register(){
 		d['username'] = document.getElementById('username').value
 		d['password'] = $.md5(document.getElementById('passwd').value)
 		d['name'] = document.getElementById('name').value
+		d['code'] = document.getElementById('code').value
 		//d['postcode'] = document.getElementById('postcode').value
 		
 		$.ajax({
@@ -31,7 +32,7 @@ function register(){
 		})
  	  }
  	  
- 	  function login(){
+function login(){
  	  	d = {}
  	  	d['username'] = document.getElementById("username").value
  	  	d['password'] = $.md5(document.getElementById("passwd").value)
@@ -54,7 +55,7 @@ function register(){
 		})
  	  }
 
- 	  function checklogin(){
+function checklogin(){
  	  	d = {}
  	  	d['userid'] = getCookie('useridthu')
  	  	d['username'] = getCookie('usernamethu')
@@ -77,7 +78,7 @@ function register(){
 		})
  	  }
 
- 	  function showuserinfo(){
+function showname(){
  	  	d = {}
  	  	d['userid'] = getCookie('useridthu')
  	  	d['username'] = getCookie('usernamethu')
@@ -89,18 +90,34 @@ function register(){
 			success:function userinfo_return(data){
  	  		result = JSON.parse(data)
  	  		if (result['success'] == 1){
- 	  			document.getElementById('username').innerHTML=result['username']
- 	  			document.getElementById('name').innerHTML=result['name']
- 	  			document.getElementById('identity').innerHTML=result['identity']
- 	  			document.getElementById('college').innerHTML=result['college']
- 	  			document.getElementById('department').innerHTML=result['department']
- 	  			if (result['applied']){
- 	  				document.getElementById('status').innerHTML = '<font style="color:green">已申请</p>'
-      				//document.getElementById('applies').innerHTML = '<a href="#" onclick="getapplymaterial()">下载已提交材料</a><br><a href="/applymodify">修改申请材料</a><br><a href="#" onclick="apply_cancel()">取消申请</a><br>'
-      				document.getElementById('applydate').innerHTML=result['applydate']
-      				document.getElementById('lastmodify').innerHTML=result['lastmodify']
-      			}
-      			document.getElementById('information').style.display = ''
+
+ 	  				document.getElementById('name').innerHTML=result['name']
+
+ 	  		}
+ 	  		else{
+ 	  		}
+ 	  	}
+		})
+ 	  }
+
+function showuserinfo(){
+ 	  	d = {}
+ 	  	d['userid'] = getCookie('useridthu')
+ 	  	d['username'] = getCookie('usernamethu')
+ 	  	d['token'] = getCookie('tokenthu')
+ 	  	$.ajax({
+			type:"POST",
+			url:"/getuserinfo",
+			data: d,
+			success:function userinfo_return(data){
+ 	  		result = JSON.parse(data)
+ 	  		if (result['success'] == 1){
+ 	  			infolist = ['name','class','sex','school_roll','political','grade','suo'
+ 	  			,'ethnic','mas_doc','mentor','email', 'postcode','address','mobile']
+ 	  			for (i=0;i<infolist.length;i++){
+ 	  				info = infolist[i]
+ 	  				document.getElementById(info).value=result[info]
+ 	  			}
  	  		}
  	  		else{
  	  		}
@@ -126,10 +143,12 @@ function modify(){
  	  	d['userid'] = getCookie('useridthu')
  	  	d['username'] = getCookie('usernamethu')
  	  	d['token'] = getCookie('tokenthu')
-		d['email'] = document.getElementById('email').value
-		d['mobile'] = document.getElementById('mobile').value
-		d['address'] = document.getElementById('address').value
-		d['postcode'] = document.getElementById('postcode').value
+ 	  	infolist = ['name','class','sex','school_roll','political','grade','suo'
+ 	  			,'ethnic','mas_doc','mentor','email', 'postcode','address','mobile']
+ 	  	for (i=0;i<infolist.length;i++){
+ 	  				info = infolist[i]
+ 	  				d[info] = document.getElementById(info).value
+ 	  			}
 		
 		$.ajax({
 			type:"POST",
