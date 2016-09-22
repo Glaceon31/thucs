@@ -186,7 +186,6 @@ def getuserinfo():
         return json.dumps(result)
 
 
-
 @app.route('/userlogout', methods=['POST'])
 def userlogout(jsondata):
     data = json.loads(jsondata)

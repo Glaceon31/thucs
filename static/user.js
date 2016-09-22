@@ -43,10 +43,10 @@ function login(){
 			success:function login_return(data){
  	  		result = JSON.parse(data)
  	  		if (result['success'] == 1){
- 	  			setCookie('useridthu', result['userid'], 1)
- 	  			setCookie('usernamethu', result['username'], 1)
- 	  			setCookie('tokenthu', result['token'], 1)
- 	  			window.location = '/mainpage'
+ 	  			setCookie('useridthu', result['userid'], 10)
+ 	  			setCookie('usernamethu', result['username'], 10)
+ 	  			setCookie('tokenthu', result['token'], 10)
+ 	  			window.location = '/scholarshiip'
  	  		}
  	  		else{
  	  			alert(result['message'])

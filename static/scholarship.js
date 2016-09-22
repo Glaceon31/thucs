@@ -4,6 +4,7 @@ function getbasicinfo(){
       d['username'] = getCookie('usernamethu')
       d['token'] = getCookie('tokenthu')
       document.getElementById('username').value=d['username']
+      document.getElementById('token').value=d['token']
       document.getElementById('username').readOnly=true
       $.ajax({
       type:"POST",
@@ -43,7 +44,7 @@ function getscholarshipinfo(){
         if (result['success'] == 1){
           result = JSON.parse(result['scholarshipinfo'])
           //inputinfo
-          infolist = ['tice','rixin','liying','otheraward','lastyear']
+          infolist = ['tice','rixin','liying','otheraward']
           for (i=0;i<infolist.length;i++){
             info = infolist[i]
             //if (result.has_key(info)){
@@ -52,13 +53,13 @@ function getscholarshipinfo(){
           }
           //tableinfo
           infolist=['conf','qikan','patent','project','standard','confaward','job','accupro']
-          infosublist=[['author','yizuo','CCF','conf','paper','time','pages', 'papertype'],
-          ['author','CCF','qikan','paper','time','pagenum','pages', 'papertype'],
-          ['author','patent','publishid','time'],
-          ['author','project','time','type'],
-          ['author','standard','time'],
-          ['author','confaward','CCF','time'],
-          ['job','level','time'],
+          infosublist=[['author','yizuo','CCF','conf','paper','time','pages', 'papertype','lastyear'],
+          ['author','CCF','qikan','paper','time','pagenum','pages', 'papertype','lastyear'],
+          ['author','patent','publishid','time','lastyear'],
+          ['author','project','time','type','lastyear'],
+          ['author','standard','time','lastyear'],
+          ['author','confaward','CCF','time','lastyear'],
+          ['job','level','starttime','endtime','months'],
           ['accupro','content','time']
           ]
           for (ind=0;ind<infolist.length;ind++){
@@ -83,6 +84,8 @@ function getscholarshipinfo(){
 
 
 $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip(); 
+
       var conf_i=0;
      $("#conf_add_row").click(function(){
       $('#conf_addr'+conf_i).html("<td>"+ (conf_i+1) 
@@ -108,6 +111,9 @@ $(document).ready(function(){
         +"' class='form-control px50'/>"
         +"</td><td><select name='conf_papertype"+conf_i
         +"' id='conf_papertype"+conf_i
+        +"' class='form-control px100'/></select>"
+        +"</td><td><select name='conf_lastyear"+conf_i
+        +"' id='conf_lastyear"+conf_i
         +"' class='form-control px100'/></select></td>");
 
       $('#conf').append('<tr id="conf_addr'+(conf_i+1)+'"></tr>');
@@ -116,12 +122,16 @@ $(document).ready(function(){
       document.getElementById("conf_CCF"+conf_i).add(new Option("A","A"))
       document.getElementById("conf_CCF"+conf_i).add(new Option("B","B"))
       document.getElementById("conf_CCF"+conf_i).add(new Option("C","C"))
+      document.getElementById("conf_CCF"+conf_i).add(new Option("O","O"))
       document.getElementById("conf_CCF"+conf_i).add(new Option("其他","其他"))
       document.getElementById("conf_papertype"+conf_i).add(new Option("full paper","full paper"))
       document.getElementById("conf_papertype"+conf_i).add(new Option("poster","poster"))
       document.getElementById("conf_papertype"+conf_i).add(new Option("short paper","short paper"))
       document.getElementById("conf_papertype"+conf_i).add(new Option("workshop","workshop"))
       document.getElementById("conf_papertype"+conf_i).add(new Option("demo","demo"))
+      document.getElementById("conf_lastyear"+conf_i).add(new Option("否","否"))
+      document.getElementById("conf_lastyear"+conf_i).add(new Option("是","是"))
+      
       conf_i++; 
   });
      $("#conf_delete_row").click(function(){
@@ -157,18 +167,25 @@ $(document).ready(function(){
         +"' class='form-control px50'/>"
         +"</td><td><select name='qikan_papertype"+qikan_i
         +"' id='qikan_papertype"+qikan_i
+        +"' class='form-control px100'/></select>"
+        +"</td><td><select name='qikan_lastyear"+qikan_i
+        +"' id='qikan_lastyear"+qikan_i
         +"' class='form-control px100'/></select></td>");
 
       $('#qikan').append('<tr id="qikan_addr'+(qikan_i+1)+'"></tr>');
       document.getElementById("qikan_CCF"+qikan_i).add(new Option("A","A"))
       document.getElementById("qikan_CCF"+qikan_i).add(new Option("B","B"))
       document.getElementById("qikan_CCF"+qikan_i).add(new Option("C","C"))
+      document.getElementById("qikan_CCF"+qikan_i).add(new Option("O","O"))
       document.getElementById("qikan_CCF"+qikan_i).add(new Option("其他","其他"))
       document.getElementById("qikan_papertype"+qikan_i).add(new Option("full paper","full paper"))
       document.getElementById("qikan_papertype"+qikan_i).add(new Option("poster","poster"))
       document.getElementById("qikan_papertype"+qikan_i).add(new Option("short paper","short paper"))
       document.getElementById("qikan_papertype"+qikan_i).add(new Option("workshop","workshop"))
       document.getElementById("qikan_papertype"+qikan_i).add(new Option("demo","demo"))
+      document.getElementById("qikan_lastyear"+qikan_i).add(new Option("否","否"))
+      document.getElementById("qikan_lastyear"+qikan_i).add(new Option("是","是"))
+      
       qikan_i++; 
   });
      $("#qikan_delete_row").click(function(){
@@ -193,9 +210,14 @@ $(document).ready(function(){
         +"' class='form-control px150'/>"
         +"</td><td><input type='text' name='patent_time"+patent_i
         +"' id='patent_time"+patent_i
-        +"' class='form-control px100'/></td>");
+        +"' class='form-control px100'/>"
+        +"</td><td><select name='patent_lastyear"+patent_i
+        +"' id='patent_lastyear"+patent_i
+        +"' class='form-control px100'/></select></td>");
 
       $('#patent').append('<tr id="patent_addr'+(patent_i+1)+'"></tr>');
+      document.getElementById("patent_lastyear"+patent_i).add(new Option("否","否"))
+      document.getElementById("patent_lastyear"+patent_i).add(new Option("是","是"))
       patent_i++; 
   });
      $("#patent_delete_row").click(function(){
@@ -220,12 +242,17 @@ $(document).ready(function(){
         +"' class='form-control px150'/>"
         +"</td><td><select name='project_type"+project_i
         +"' id='project_type"+project_i
-        +"' class='form-control px100'/></td>");
+        +"' class='form-control px100'/>"
+        +"</td><td><select name='project_lastyear"+project_i
+        +"' id='project_lastyear"+project_i
+        +"' class='form-control px100'/></select></td>");
 
       $('#project').append('<tr id="project_addr'+(project_i+1)+'"></tr>');
       document.getElementById("project_type"+project_i).add(new Option("国家级奖励","国家级奖励"))
       document.getElementById("project_type"+project_i).add(new Option("省级部一等奖项目","省级部一等奖项目"))
       document.getElementById("project_type"+project_i).add(new Option("省级部二等奖项目","省级部二等奖项目"))
+      document.getElementById("project_lastyear"+project_i).add(new Option("否","否"))
+      document.getElementById("project_lastyear"+project_i).add(new Option("是","是"))
       project_i++; 
   });
      $("#project_delete_row").click(function(){
@@ -247,9 +274,14 @@ $(document).ready(function(){
         +"' class='form-control px150'/>"
         +"</td><td><input type='text' name='standard_time"+standard_i
         +"' id='standard_time"+standard_i
-        +"' class='form-control px100'/></td>");
+        +"' class='form-control px100'/>"
+        +"</td><td><select name='standard_lastyear"+standard_i
+        +"' id='standard_lastyear"+standard_i
+        +"' class='form-control px100'/></select></td>");
 
       $('#standard').append('<tr id="standard_addr'+(standard_i+1)+'"></tr>');
+      document.getElementById("standard_lastyear"+standard_i).add(new Option("否","否"))
+      document.getElementById("standard_lastyear"+standard_i).add(new Option("是","是"))
       standard_i++; 
   });
      $("#standard_delete_row").click(function(){
@@ -274,9 +306,14 @@ $(document).ready(function(){
         +"' class='form-control px150'/>"
         +"</td><td><input type='text' name='confaward_time"+confaward_i
         +"' id='confaward_time"+confaward_i
-        +"' class='form-control px100'/></td>");
+        +"' class='form-control px100'/>"
+        +"</td><td><select name='confaward_lastyear"+confaward_i
+        +"' id='confaward_lastyear"+confaward_i
+        +"' class='form-control px100'/></select></td>");
 
       $('#confaward').append('<tr id="confaward_addr'+(confaward_i+1)+'"></tr>');
+      document.getElementById("confaward_lastyear"+confaward_i).add(new Option("否","否"))
+      document.getElementById("confaward_lastyear"+confaward_i).add(new Option("是","是"))
       confaward_i++; 
   });
      $("#confaward_delete_row").click(function(){
@@ -296,14 +333,21 @@ $(document).ready(function(){
         +"</td><td><select name='job_level"+job_i
         +"' id='job_level"+job_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='job_time"+job_i
-        +"' id='job_time"+job_i
+        +"</td><td><input type='text' name='job_starttime"+job_i
+        +"' id='job_starttime"+job_i
+        +"' class='form-control px100'/>"
+        +"</td><td><input type='text' name='job_endtime"+job_i
+        +"' id='job_endtime"+job_i
+        +"' class='form-control px100'/>"
+        +"</td><td><input type='text' name='job_months"+job_i
+        +"' id='job_months"+job_i
         +"' class='form-control px100'/></td>");
 
       $('#job').append('<tr id="job_addr'+(job_i+1)+'"></tr>');
       document.getElementById("job_level"+job_i).add(new Option("A","A"))
       document.getElementById("job_level"+job_i).add(new Option("B","B"))
       document.getElementById("job_level"+job_i).add(new Option("C","C"))
+      document.getElementById("job_level"+job_i).add(new Option("D","D"))
       job_i++; 
   });
      $("#job_delete_row").click(function(){

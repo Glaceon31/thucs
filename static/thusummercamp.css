@@ -92,3 +92,21 @@
       display: none; 
     }
   }
+
+.table-header{
+  text-align: center;
+  padding-bottom: 10px;
+  font-size: 20px;
+}
+
+.icon{
+  height: 20px;
+  width: 20px;
+  padding-bottom: 5px;
+}
+
+div.tooltip-inner {
+    max-width: 450px;
+    font-size: 14px;
+    white-space:pre-wrap;
+}

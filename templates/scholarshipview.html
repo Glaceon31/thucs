@@ -2,13 +2,13 @@
 <html>
 
   {% include 'header.html' %}
-  <script type="text/javascript" src="/static/scholarship.js"></script>
+  <script type="text/javascript" src="/static/scholarshipview.js"></script>
   <link rel="stylesheet" href="/static/scholarship.css" type="text/css">
   <script type="text/javascript">
   function init(){
+    getotherscholarshipinfo({{username}})
     document.getElementById("viewapply").href="/scholarshipview/"+getCookie('usernamethu')
-    getbasicinfo()
-    getscholarshipinfo()
+    getscores({{username}})
   }
 
    
@@ -27,7 +27,7 @@
       <div id="page-content-wrapper">
         
         <div >
-          {% include 'module_scholarshipform.html' %}
+          {% include 'module_scholarshipview.html' %}
           
         </div>
 

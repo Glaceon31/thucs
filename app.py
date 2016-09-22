@@ -45,10 +45,9 @@ def scholarshiplist():
 	slist=getscholarshiplist()
 	return render_template('scholarshiplist.html', slist=slist)
 
-@app.route('/scholarshipcheck/<sid>')
-def scholarshipcheck(sid):
-	info = getscholarshipinfo(sid)
-	return render_template('scholarcheck.html', info = info)
+@app.route('/scholarshipview/<username>')
+def scholarshipcheck(username):
+	return render_template('scholarshipview.html', username=username)
 
 @app.route('/fonts/<path>')
 def fonts(path):
