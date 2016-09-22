@@ -46,7 +46,7 @@ function login(){
  	  			setCookie('useridthu', result['userid'], 10)
  	  			setCookie('usernamethu', result['username'], 10)
  	  			setCookie('tokenthu', result['token'], 10)
- 	  			window.location = '/scholarshiip'
+ 	  			window.location = '/scholarship'
  	  		}
  	  		else{
  	  			alert(result['message'])
