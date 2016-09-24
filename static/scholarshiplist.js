@@ -20,7 +20,7 @@ function showscholarshiplist(){
 	          for (i=0;i<infolist.length;i++){
 	            info = infolist[i]
 
-	            content += "<td>"+scholarinfo[info]+"</td>"
+	            content += "<td>"+scholarinfo[info].fixed(3)+"</td>"
 	          }
 	          content += "<td>0</td>"
 	          content += "<td><a href='/scholarshipview/"+scholarinfo['username']+"'>查看</a></td>"
