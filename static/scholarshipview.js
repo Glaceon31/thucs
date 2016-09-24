@@ -6,7 +6,7 @@ function getscores(username){
       success:function userinfo_return(data){
         result = JSON.parse(data)
 
-          infolist = ['conf','qikan','patent','job']
+          infolist = ['accupro','academic','standard','project','shegong','conf','qikan','patent','job']
       for (i in infolist){
 
               info = infolist[i]

@@ -69,6 +69,7 @@ def getscholarshiplist():
 
                 result.append(tmpresult)
                 result = sorted(result, key=lambda x:x['academic'],reverse=True)
+        print len(result)
         return json.dumps(result)
     except:
         traceback.print_exc()
@@ -78,11 +79,17 @@ def getscores(username):
     scholarshipinfo = json.loads(getscholarshipinfo(username))['scholarshipinfo']
     scholarshipinfo = json.loads(scholarshipinfo)
     result = {}
+    result['academic'] = getacademicscore(scholarshipinfo)
     result['conf'] = getconferencescore(scholarshipinfo)
     result['qikan'] = getqikanscore(scholarshipinfo)
     result['patent'] = getpatentscore(scholarshipinfo)
+    result['project'] = getprojectscore(scholarshipinfo)
+    result['standard'] = getstanardscore(scholarshipinfo)
+    result['award'] = getawardscore(scholarshipinfo)
     result['job'] = getjobscore(scholarshipinfo)
-    print result
+    result['accupro'] = getaccuproscore(scholarshipinfo)
+    result['shegong'] = getshegongscore(scholarshipinfo)
+    #print result
     return json.dumps(result)
 
 def getkeyinfo(scholarshipinfo):
@@ -94,7 +101,7 @@ def getkeyinfo(scholarshipinfo):
     result['patent'] = getpatentnum(scholarshipinfo)
     result['academic'] = getacademicscore(scholarshipinfo)
     result['shegong'] = getshegongscore(scholarshipinfo)
-    print result
+    #print result
     result['total'] = int(10*(0.7*result['academic']+0.3*result['shegong']))/10.0
     return result
 
@@ -160,19 +167,30 @@ def getpatentscore(scholarshipinfo):
     num = 0
     while (scholarshipinfo.has_key('patent_author'+str(num))):
         num += 1
-    return min(1,num)
+    return min(2,num)
 
 def getprojectscore(scholarshipinfo):
-    return 0
+    num = 0
+    result = 0
+    score = {u'国家级奖励':3,u'省级部一等奖项目':2,u'省级部二等奖项目':1}
+    while (scholarshipinfo.has_key('project_author'+str(num))):
+        level = scholarshipinfo['project_type'+str(num)]
+        if score.has_key(level):
+            result+= score[level]
+        num += 1
+    return result
 
 def getstanardscore(scholarshipinfo):
-    return 0
+    num = 0
+    while (scholarshipinfo.has_key('standard_author'+str(num))):
+        num += 1
+    return min(2,2*num)
 
 def getawardscore(scholarshipinfo):
     return 0
 
 def getshegongscore(scholarshipinfo):
-    return getjobscore(scholarshipinfo)+getaccuproscore(scholarshipinfo)
+    return min(10,getjobscore(scholarshipinfo)+getaccuproscore(scholarshipinfo))
 
 def getjobscore(scholarshipinfo):
     num = 0
@@ -183,15 +201,16 @@ def getjobscore(scholarshipinfo):
         if score.has_key(level):
             result+= score[level]
         num += 1
-    return min(10, result)
+    return result
 
 def getaccuproscore(scholarshipinfo):
     num = 0
     result = 0
-    score = {'A':5,'B':4,'C':4,'D':3,'E':2}
+    score = {'A':5,'B':4,'C':4,'D':3,'E':2,'F1':3,\
+    'F2':2,'F3':1,'G':1,'H':1,'I':2,'J':1,'K1':1.5,'K2':1,'K3':0.5}
     while (scholarshipinfo.has_key('accupro_accupro'+str(num))):
         level = scholarshipinfo['accupro_accupro'+str(num)]
         if score.has_key(level):
             result+= score[level]
         num += 1
-    return 0
+    return result

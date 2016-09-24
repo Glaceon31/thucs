@@ -14,7 +14,7 @@ function getbasicinfo(){
         result = JSON.parse(data)
         if (result['success'] == 1){
           infolist = ['name','class','sex','school_roll','political','grade','suo'
-          ,'ethnic','mas_doc','mentor','email','mobile','kaiti']
+          ,'ethnic','mas_doc','mentor','email','mobile']
           for (i=0;i<infolist.length;i++){
             info = infolist[i]
             document.getElementById(info).value=result[info]
@@ -44,7 +44,7 @@ function getscholarshipinfo(){
         if (result['success'] == 1){
           result = JSON.parse(result['scholarshipinfo'])
           //inputinfo
-          infolist = ['tice','rixin','liying','otheraward']
+          infolist = ['tice','rixin','liying','otheraward','kaiti']
           for (i=0;i<infolist.length;i++){
             info = infolist[i]
             //if (result.has_key(info)){
@@ -377,12 +377,16 @@ $(document).ready(function(){
       document.getElementById("accupro_accupro"+accupro_i).add(new Option("C","C"))
       document.getElementById("accupro_accupro"+accupro_i).add(new Option("D","D"))
       document.getElementById("accupro_accupro"+accupro_i).add(new Option("E","E"))
-      document.getElementById("accupro_accupro"+accupro_i).add(new Option("F","F"))
+      document.getElementById("accupro_accupro"+accupro_i).add(new Option("F1","F1"))
+      document.getElementById("accupro_accupro"+accupro_i).add(new Option("F2","F2"))
+      document.getElementById("accupro_accupro"+accupro_i).add(new Option("F3","F3"))
       document.getElementById("accupro_accupro"+accupro_i).add(new Option("G","G"))
       document.getElementById("accupro_accupro"+accupro_i).add(new Option("H","H"))
       document.getElementById("accupro_accupro"+accupro_i).add(new Option("I","I"))
       document.getElementById("accupro_accupro"+accupro_i).add(new Option("J","J"))
-      document.getElementById("accupro_accupro"+accupro_i).add(new Option("K","K"))
+      document.getElementById("accupro_accupro"+accupro_i).add(new Option("K1","K1"))
+      document.getElementById("accupro_accupro"+accupro_i).add(new Option("K2","K2"))
+      document.getElementById("accupro_accupro"+accupro_i).add(new Option("K3","K3"))
       accupro_i++; 
   });
      $("#accupro_delete_row").click(function(){
