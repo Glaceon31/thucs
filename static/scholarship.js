@@ -1,3 +1,25 @@
+function applycancel(){
+  d = {}
+      d['userid'] = getCookie('useridthu')
+      d['username'] = getCookie('usernamethu')
+      d['token'] = getCookie('tokenthu')
+      $.ajax({
+      type:"POST",
+      url:"/scholarshipcancel",
+      data: d,
+      success:function userinfo_return(data){
+        result = JSON.parse(data)
+        if (result['success'] == 1){
+          alert(result['message'])
+          window.location='/scholarshipapply'
+        }
+        else{
+          alert(result['message'])
+        }
+      }
+    })
+    }
+
 function getbasicinfo(){
       d = {}
       d['userid'] = getCookie('useridthu')

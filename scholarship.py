@@ -8,8 +8,10 @@ import random
 from tools import *
 #from user import getuserinfo
 import re
+import string
 
 userdb = db.user
+logdb = db.log
 
 @app.route('/scholarshipapply', methods=['GET','POST'])
 def scholarshipapply():
@@ -24,13 +26,43 @@ def scholarshipapply():
             if tmp['token'] != data['token']:
                 message = u'请重新登录'
                 assert 0 == 1
+            logdata = {}
+            logdata['action'] = 'apply'
+            logdata['scholarshipinfo'] = json.dumps(data)
+            logdata['username'] = tmp['username']
+            logdata['ip'] = request.remote_addr
+            logdata['time'] = datetime.datetime.now()
+            logdb.insert(logdata)
             userdb.update_one({'username':data['username']},{'$set':{'scholarshipinfo':json.dumps(data)}})
             message = u"提交成功"
         except:
             traceback.print_exc()
-        print message
+        #print message
         return render_template('scholarshipapply.html', message=message)
     return render_template('scholarshipapply.html', message="")
+
+@app.route('/scholarshipcancel', methods=['GET','POST'])
+def scholarshipcancel():
+    jsondata = request.form
+    data = immutabledict2dict(jsondata)
+    result = {'success': 0}
+    try:
+        tmp = userdb.find_one({'username': data['username']})
+        if tmp['token'] != data['token']:
+            result['message'] = u'请重新登录'
+            return json.dumps(result)
+        logdata = {}
+        logdata['action'] = 'cancel'
+        logdata['username'] = tmp['username']
+        logdata['ip'] = request.remote_addr
+        logdata['time'] = datetime.datetime.now()
+        logdb.insert(logdata)
+        userdb.update_one({'username':data['username']},{'$unset':{'scholarshipinfo':1}})
+        result['message'] = u'撤销成功'
+        result['success']=1
+        return json.dumps(result)
+    except:
+        traceback.print_exc()
 
 @app.route('/getscholarshipinfo/<username>', methods=['GET','POST'])
 def getscholarshipinfo(username):
@@ -102,7 +134,7 @@ def getkeyinfo(scholarshipinfo):
     result['academic'] = getacademicscore(scholarshipinfo)
     result['shegong'] = getshegongscore(scholarshipinfo)
     #print result
-    result['total'] = int(10*(0.7*result['academic']+0.3*result['shegong']))/10.0
+    result['total'] = int(1000*(0.7*result['academic']+0.3*result['shegong']))/1000.0
     return result
 
 def getscholarshipscore(scholarshipinfo):
@@ -200,8 +232,14 @@ def getjobscore(scholarshipinfo):
     score = {'A':5,'B':3,'C':0.5}
     while (scholarshipinfo.has_key('job_job'+str(num))):
         level = scholarshipinfo['job_level'+str(num)]
+        try:
+            months = string.atoi(scholarshipinfo['job_months'+str(num)])
+            months = min(12,months)
+        except:
+            months = 0
+            print months
         if score.has_key(level):
-            result+= score[level]
+            result+= int(1000*score[level]*months/12.0)/1000.0
         num += 1
     return result
 

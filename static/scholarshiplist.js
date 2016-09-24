@@ -31,3 +31,7 @@ function showscholarshiplist(){
     })
 
 }
+
+$(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip(); 
+})

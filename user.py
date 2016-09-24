@@ -9,6 +9,8 @@ from tools import *
 import re
 
 userdb = db.user
+logdb = db.log
+
 
 userinfolist = ['username', 'name']
 
@@ -108,6 +110,12 @@ def userlogin():
                 result['userid'] = str(tmp['_id'])
                 result['username'] = tmp['username']
                 result['token'] = token
+                logdata = {}
+                logdata['action'] = 'login'
+                logdata['username'] = tmp['username']
+                logdata['ip'] = request.remote_addr
+                logdata['time'] = datetime.datetime.now()
+                logdb.insert(logdata)
                 userdb.update_one({'_id': tmp['_id']}, {'$set':{'token' : token}})
                 return json.dumps(result)
             else:
