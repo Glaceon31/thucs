@@ -147,8 +147,10 @@ def getconferencescore(scholarshipinfo):
     score = {'A':5,'B':3,'C':1.5,'O':0.5}
     while (scholarshipinfo.has_key('conf_author'+str(num))):
         level = scholarshipinfo['conf_CCF'+str(num)]
-        if score.has_key(level):
-            result+= score[level]
+        if scholarshipinfo.has_key('conf_yizuo'+str(num)):
+            if scholarshipinfo['conf_yizuo'+str(num)] == u'是':
+                if score.has_key(level):
+                    result+= score[level]
         num += 1
     return result
 
