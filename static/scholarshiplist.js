@@ -12,7 +12,7 @@ function showscholarshiplist(){
         result = JSON.parse(data)
 
           infolist = ['username','name','A','B','C','O','patent',
-			'academic','shegong','total']
+			'academic']//,'shegong','total']
 			
 			for (j in result){
 				scholarinfo = result[j]
@@ -20,8 +20,10 @@ function showscholarshiplist(){
 	          for (i=0;i<infolist.length;i++){
 	            info = infolist[i]
 
-	            content += "<td>"+scholarinfo[info].fixed(3)+"</td>"
+	            content += "<td>"+scholarinfo[info]+"</td>"
 	          }
+	          content += "<td>"+parseInt(1000*scholarinfo['shegong'])/1000+"</td>"
+	          content += "<td>"+parseInt(1000*scholarinfo['total'])/1000+"</td>"
 	          content += "<td>0</td>"
 	          content += "<td><a href='/scholarshipview/"+scholarinfo['username']+"'>查看</a></td>"
 	          $("#applylist_addr"+j).html(content)

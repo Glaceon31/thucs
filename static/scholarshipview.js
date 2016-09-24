@@ -10,7 +10,7 @@ function getscores(username){
       for (i in infolist){
 
               info = infolist[i]
-              document.getElementById(info+"score").innerHTML=result[info]
+              document.getElementById(info+"score").innerHTML=parseInt(1000*result[info])/1000
       }
       }
     })
