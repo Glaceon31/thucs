@@ -176,25 +176,28 @@ def getpatentnum(scholarshipinfo):
 def getconferencescore(scholarshipinfo):
     num = 0
     result = 0
-    score = {'A':5,'B':3,'C':1.5}
+    score = {'A full paper':5,'A short paper':3,'A poster':1,'A workshop':1,'A demo':1,
+            'B full paper':3,'B short paper':1.5,'B poster':1,'B workshop':1,'B demo':1,
+            'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
+            'O full paper':1}
     while (scholarshipinfo.has_key('conf_author'+str(num))):
-        level = scholarshipinfo['conf_CCF'+str(num)]
+        level_type = scholarshipinfo['conf_CCF'+str(num)]+' '+scholarshipinfo['conf_papertype'+str(num)]
         if scholarshipinfo.has_key('conf_yizuo'+str(num)):
             if scholarshipinfo['conf_yizuo'+str(num)] == u'是':
-                if score.has_key(level):
-                    result+= score[level]
-        if level == 'O':
-            if scholarshipinfo['conf_papertype'+str(num)] == u'full paper':
-                result += 1
+                if score.has_key(level_type):
+                    result+= score[level_type]
         num += 1
     return result
 
 def getqikanscore(scholarshipinfo):
     num = 0
     result = 0
-    score = {'A':5,'B':3,'C':1.5,'O':0.5}
+    score = {'A full paper':5,'A short paper':3,'A poster':1,'A workshop':1,'A demo':1,
+            'B full paper':3,'B short paper':1.5,'B poster':1,'B workshop':1,'B demo':1,
+            'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
+            'O full paper':1}
     while (scholarshipinfo.has_key('qikan_author'+str(num))):
-        level = scholarshipinfo['qikan_CCF'+str(num)]
+        level = scholarshipinfo['qikan_CCF'+str(num)]+' '+scholarshipinfo['qikan_papertype'+str(num)]
         if score.has_key(level):
             result+= score[level]
         num += 1
@@ -204,7 +207,7 @@ def getpatentscore(scholarshipinfo):
     num = 0
     while (scholarshipinfo.has_key('patent_author'+str(num))):
         num += 1
-    return min(2,num)
+    return min(1,num)
 
 def getprojectscore(scholarshipinfo):
     num = 0
