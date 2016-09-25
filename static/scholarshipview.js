@@ -35,7 +35,7 @@ function getotherscholarshipinfo(username){
           //inputinfo
           infolist = ['name','class','sex','school_roll','political','grade','suo'
           ,'ethnic','mas_doc','mentor','email','mobile','kaiti','tice',
-          'rixin','liying','otheraward', 'username']
+          'otheraward', 'username']
           for (i=0;i<infolist.length;i++){
             info = infolist[i]
             //if (result.has_key(info)){

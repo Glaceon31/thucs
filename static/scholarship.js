@@ -66,7 +66,7 @@ function getscholarshipinfo(){
         if (result['success'] == 1){
           result = JSON.parse(result['scholarshipinfo'])
           //inputinfo
-          infolist = ['tice','rixin','liying','otheraward','kaiti']
+          infolist = ['tice','otheraward','kaiti']
           for (i=0;i<infolist.length;i++){
             info = infolist[i]
             //if (result.has_key(info)){
