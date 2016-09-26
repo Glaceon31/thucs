@@ -176,7 +176,9 @@ def getpapernum(scholarshipinfo):
             continue
         level = scholarshipinfo['conf_CCF'+str(num)]
         if score.has_key(level):
-            result[score[level]] += 1
+            if scholarshipinfo.has_key('conf_yizuo'+str(num)):
+                if scholarshipinfo['conf_yizuo'+str(num)] == u'是':
+                    result[score[level]] += 1
         num += 1
     
     num = 0
