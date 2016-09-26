@@ -137,6 +137,24 @@ def getkeyinfo(scholarshipinfo):
     result['total'] = int(1000*(0.7*result['academic']+0.3*result['shegong']))/1000.0
     return result
 
+def checktime(timestring):
+    try:
+        times = timestring.split('/')
+        if len(times) == 3:
+            year,month,day = times
+            year = string.atoi(year)
+            month = string.atoi(month)
+            day = string.atoi(day)
+            return True
+        if len(times) == 2:
+            year,month = times
+            year = string.atoi(year)
+            month = string.atoi(month)
+            return True
+        return False
+    except:
+        return False
+
 def getscholarshipscore(scholarshipinfo):
     return getacademicscore(scholarshipinfo)+getshegongscore(scholarshipinfo)
 
@@ -153,6 +171,9 @@ def getpapernum(scholarshipinfo):
     result = [0,0,0,0]
     score = {'A':0,'B':1,'C':2,'O':3}
     while scholarshipinfo.has_key('conf_author'+str(num)):
+        if not checktime(scholarshipinfo['conf_time'+str(num)]):
+            num += 1
+            continue
         level = scholarshipinfo['conf_CCF'+str(num)]
         if score.has_key(level):
             result[score[level]] += 1
@@ -160,6 +181,9 @@ def getpapernum(scholarshipinfo):
     
     num = 0
     while scholarshipinfo.has_key('qikan_author'+str(num)):
+        if not checktime(scholarshipinfo['qikan_time'+str(num)]):
+            num += 1
+            continue
         level = scholarshipinfo['qikan_CCF'+str(num)]
         if score.has_key(level):
             result[score[level]] += 1
@@ -167,10 +191,15 @@ def getpapernum(scholarshipinfo):
     return result
 
 def getpatentnum(scholarshipinfo):
+    result = 0
     num = 0
     while (scholarshipinfo.has_key('patent_author'+str(num))):
+        if not checktime(scholarshipinfo['patent_time'+str(num)]):
+            num += 1
+            continue
+        result += 1
         num += 1
-    return num
+    return result
 
 
 def getconferencescore(scholarshipinfo):
@@ -181,6 +210,9 @@ def getconferencescore(scholarshipinfo):
             'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
             'O full paper':1}
     while (scholarshipinfo.has_key('conf_author'+str(num))):
+        if not checktime(scholarshipinfo['conf_time'+str(num)]):
+            num += 1
+            continue
         level_type = scholarshipinfo['conf_CCF'+str(num)]+' '+scholarshipinfo['conf_papertype'+str(num)]
         if scholarshipinfo.has_key('conf_yizuo'+str(num)):
             if scholarshipinfo['conf_yizuo'+str(num)] == u'是':
@@ -197,6 +229,9 @@ def getqikanscore(scholarshipinfo):
             'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
             'O full paper':1}
     while (scholarshipinfo.has_key('qikan_author'+str(num))):
+        if not checktime(scholarshipinfo['qikan_time'+str(num)]):
+            num += 1
+            continue
         level = scholarshipinfo['qikan_CCF'+str(num)]+' '+scholarshipinfo['qikan_papertype'+str(num)]
         if score.has_key(level):
             result+= score[level]
@@ -204,16 +239,24 @@ def getqikanscore(scholarshipinfo):
     return result
 
 def getpatentscore(scholarshipinfo):
+    result = 0
     num = 0
     while (scholarshipinfo.has_key('patent_author'+str(num))):
+        if not checktime(scholarshipinfo['patent_time'+str(num)]):
+            num += 1
+            continue
+        result += 1
         num += 1
-    return min(1,num)
+    return min(1,result)
 
 def getprojectscore(scholarshipinfo):
     num = 0
     result = 0
     score = {u'国家级奖励':3,u'省级部一等奖项目':2,u'省级部二等奖项目':1}
     while (scholarshipinfo.has_key('project_author'+str(num))):
+        if not checktime(scholarshipinfo['project_time'+str(num)]):
+            num += 1
+            continue
         level = scholarshipinfo['project_type'+str(num)]
         if score.has_key(level):
             result+= score[level]
@@ -221,10 +264,15 @@ def getprojectscore(scholarshipinfo):
     return result
 
 def getstanardscore(scholarshipinfo):
+    result = 0
     num = 0
     while (scholarshipinfo.has_key('standard_author'+str(num))):
+        if not checktime(scholarshipinfo['standard_time'+str(num)]):
+            num += 1
+            continue
         num += 1
-    return min(2,2*num)
+        result += 2
+    return min(2,result)
 
 def getawardscore(scholarshipinfo):
     return 0
@@ -237,6 +285,12 @@ def getjobscore(scholarshipinfo):
     result = 0
     score = {'A':5,'B':3,'C':0.5}
     while (scholarshipinfo.has_key('job_job'+str(num))):
+        if not checktime(scholarshipinfo['job_starttime'+str(num)]):
+            num += 1
+            continue
+        if not checktime(scholarshipinfo['job_endtime'+str(num)]):
+            num += 1
+            continue
         level = scholarshipinfo['job_level'+str(num)]
         try:
             months = string.atoi(scholarshipinfo['job_months'+str(num)])
@@ -255,6 +309,9 @@ def getaccuproscore(scholarshipinfo):
     score = {'A':5,'B':4,'C':4,'D':3,'E':2,'F1':3,\
     'F2':2,'F3':1,'G':1,'H':1,'I':2,'J':1,'K1':1.5,'K2':1,'K3':0.5}
     while (scholarshipinfo.has_key('accupro_accupro'+str(num))):
+        if not checktime(scholarshipinfo['accupro_time'+str(num)]):
+            num += 1
+            continue
         level = scholarshipinfo['accupro_accupro'+str(num)]
         if score.has_key(level):
             result+= score[level]
