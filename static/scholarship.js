@@ -80,7 +80,7 @@ function getscholarshipinfo(){
           ['author','patent','publishid','time','lastyear'],
           ['author','project','time','type','lastyear'],
           ['author','standard','time','lastyear'],
-          ['author','confaward','CCF','time','lastyear'],
+          ['author','confaward','conf','CCF','time','lastyear'],
           ['job','level','starttime','endtime','months'],
           ['accupro','content','time']
           ]
@@ -322,6 +322,9 @@ $(document).ready(function(){
         +"' class='form-control px150'/>"
         +"</td><td><input type='text' name='confaward_confaward"+confaward_i
         +"' id='confaward_confaward"+confaward_i
+        +"' class='form-control px150'/>"
+        +"</td><td><input type='text' name='confaward_conf"+confaward_i
+        +"' id='confaward_conf"+confaward_i
         +"' class='form-control px150'/>"
         +"</td><td><input type='text' name='confaward_CCF"+confaward_i
         +"' id='confaward_CCF"+confaward_i
