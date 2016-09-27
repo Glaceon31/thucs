@@ -138,27 +138,47 @@ def getkeyinfo(scholarshipinfo):
     result['wrongtime'] = wrongtime1 or wrongtime2
     return result
 
-def checktime(timestring):
+def checktime(timestring, lastyear=''):
     try:
+        if lastyear == u'是':
+            last = True
+        else:
+            last = False
         times = timestring.split('/')
         if len(times) == 3:
             year,month,day = times
             year = string.atoi(year)
             month = string.atoi(month)
             day = string.atoi(day)
-            if year == 2015 and month >= 9 and month <= 12:
-                return True
-            if year == 2016 and month <= 8 and month >= 1:
-                return True
+            if not last:
+                if year == 2015 and month >= 9 and month <= 12:
+                    return True
+                if year == 2016 and month <= 8 and month >= 1:
+                    return True
+            if last:
+                if year == 2015 and month >= 9 and month <= 12:
+                    return True
+                if year == 2016:
+                    return True
+                if year == 2017 and month <= 8 and month >= 1:
+                    return True
             return False
         if len(times) == 2:
             year,month = times
             year = string.atoi(year)
             month = string.atoi(month)
-            if year == 2015 and month >= 9:
-                return True
-            if year == 2016 and month <= 8:
-                return True
+            if not last:
+                if year == 2015 and month >= 9 and month <= 12:
+                    return True
+                if year == 2016 and month <= 8 and month >= 1:
+                    return True
+            if last:
+                if year == 2015 and month >= 9 and month <= 12:
+                    return True
+                if year == 2016:
+                    return True
+                if year == 2017 and month <= 8 and month >= 1:
+                    return True
             return False
         return False
     except:
@@ -183,7 +203,7 @@ def getpapernum(scholarshipinfo):
     result = [0,0,0,0]
     score = {'A':0,'B':1,'C':2,'O':3}
     while scholarshipinfo.has_key('conf_author'+str(num)):
-        if not checktime(scholarshipinfo['conf_time'+str(num)]):
+        if not checktime(scholarshipinfo['conf_time'+str(num)],scholarshipinfo['conf_lastyear'+str(num)]):
             num += 1
             continue
         level = scholarshipinfo['conf_CCF'+str(num)]
@@ -195,7 +215,7 @@ def getpapernum(scholarshipinfo):
     
     num = 0
     while scholarshipinfo.has_key('qikan_author'+str(num)):
-        if not checktime(scholarshipinfo['qikan_time'+str(num)]):
+        if not checktime(scholarshipinfo['qikan_time'+str(num)],scholarshipinfo['qikan_lastyear'+str(num)]):
             num += 1
             continue
         level = scholarshipinfo['qikan_CCF'+str(num)]
@@ -208,7 +228,7 @@ def getpatentnum(scholarshipinfo):
     result = 0
     num = 0
     while (scholarshipinfo.has_key('patent_author'+str(num))):
-        if not checktime(scholarshipinfo['patent_time'+str(num)]):
+        if not checktime(scholarshipinfo['patent_time'+str(num)],scholarshipinfo['patent_lastyear'+str(num)]):
             num += 1
             continue
         result += 1
@@ -225,7 +245,7 @@ def getconferencescore(scholarshipinfo):
             'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
             'O full paper':1}
     while (scholarshipinfo.has_key('conf_author'+str(num))):
-        if not checktime(scholarshipinfo['conf_time'+str(num)]):
+        if not checktime(scholarshipinfo['conf_time'+str(num)],scholarshipinfo['conf_lastyear'+str(num)]):
             num += 1
             wrongtime = True
             continue
@@ -246,7 +266,7 @@ def getqikanscore(scholarshipinfo):
             'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
             'O full paper':1}
     while (scholarshipinfo.has_key('qikan_author'+str(num))):
-        if not checktime(scholarshipinfo['qikan_time'+str(num)]):
+        if not checktime(scholarshipinfo['qikan_time'+str(num)],scholarshipinfo['qikan_lastyear'+str(num)]):
             num += 1
             wrongtime = True
             continue
@@ -261,7 +281,7 @@ def getpatentscore(scholarshipinfo):
     num = 0
     wrongtime = False
     while (scholarshipinfo.has_key('patent_author'+str(num))):
-        if not checktime(scholarshipinfo['patent_time'+str(num)]):
+        if not checktime(scholarshipinfo['patent_time'+str(num)],scholarshipinfo['patent_lastyear'+str(num)]):
             num += 1
             wrongtime = True
             continue
@@ -275,7 +295,7 @@ def getprojectscore(scholarshipinfo):
     wrongtime = False
     score = {u'国家级奖励':3,u'省级部一等奖项目':2,u'省级部二等奖项目':1}
     while (scholarshipinfo.has_key('project_author'+str(num))):
-        if not checktime(scholarshipinfo['project_time'+str(num)]):
+        if not checktime(scholarshipinfo['project_time'+str(num)],scholarshipinfo['project_lastyear'+str(num)]):
             num += 1
             wrongtime = True
             continue
@@ -290,7 +310,7 @@ def getstanardscore(scholarshipinfo):
     num = 0
     wrongtime = False
     while (scholarshipinfo.has_key('standard_author'+str(num))):
-        if not checktime(scholarshipinfo['standard_time'+str(num)]):
+        if not checktime(scholarshipinfo['standard_time'+str(num)],scholarshipinfo['standard_lastyear'+str(num)]):
             num += 1
             wrongtime = True
             continue
