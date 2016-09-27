@@ -26,6 +26,9 @@ function showscholarshiplist(){
 	          content += "<td>"+parseInt(1000*scholarinfo['total'])/1000+"</td>"
 	          content += "<td>0</td>"
 	          content += "<td><a href='/scholarshipview/"+scholarinfo['username']+"'>查看</a></td>"
+	          if (scholarinfo['wrongtime']){
+	          	document.getElementById('applylist_addr'+(parseInt(j))).style.color='red'
+	          }
 	          $("#applylist_addr"+j).html(content)
 	          $("#applylist").append('<tr id="applylist_addr'+(parseInt(j)+1)+'"></tr>')
 			}

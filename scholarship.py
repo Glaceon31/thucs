@@ -111,16 +111,16 @@ def getscores(username):
     scholarshipinfo = json.loads(getscholarshipinfo(username))['scholarshipinfo']
     scholarshipinfo = json.loads(scholarshipinfo)
     result = {}
-    result['academic'] = getacademicscore(scholarshipinfo)
-    result['conf'] = getconferencescore(scholarshipinfo)
-    result['qikan'] = getqikanscore(scholarshipinfo)
-    result['patent'] = getpatentscore(scholarshipinfo)
-    result['project'] = getprojectscore(scholarshipinfo)
-    result['standard'] = getstanardscore(scholarshipinfo)
-    result['award'] = getawardscore(scholarshipinfo)
-    result['job'] = getjobscore(scholarshipinfo)
-    result['accupro'] = getaccuproscore(scholarshipinfo)
-    result['shegong'] = getshegongscore(scholarshipinfo)
+    result['academic'] = getacademicscore(scholarshipinfo)[0]
+    result['conf'] = getconferencescore(scholarshipinfo)[0]
+    result['qikan'] = getqikanscore(scholarshipinfo)[0]
+    result['patent'] = getpatentscore(scholarshipinfo)[0]
+    result['project'] = getprojectscore(scholarshipinfo)[0]
+    result['standard'] = getstanardscore(scholarshipinfo)[0]
+    result['award'] = getawardscore(scholarshipinfo)[0]
+    result['job'] = getjobscore(scholarshipinfo)[0]
+    result['accupro'] = getaccuproscore(scholarshipinfo)[0]
+    result['shegong'] = getshegongscore(scholarshipinfo)[0]
     #print result
     return json.dumps(result)
 
@@ -131,10 +131,11 @@ def getkeyinfo(scholarshipinfo):
     result['mentor'] = scholarshipinfo['mentor']
     result['A'],result['B'],result['C'],result['O'] = getpapernum(scholarshipinfo)
     result['patent'] = getpatentnum(scholarshipinfo)
-    result['academic'] = getacademicscore(scholarshipinfo)
-    result['shegong'] = getshegongscore(scholarshipinfo)
+    result['academic'], wrongtime1 = getacademicscore(scholarshipinfo)
+    result['shegong'], wrongtime2 = getshegongscore(scholarshipinfo)
     #print result
     result['total'] = int(1000*(0.7*result['academic']+0.3*result['shegong']))/1000.0
+    result['wrongtime'] = wrongtime1 or wrongtime2
     return result
 
 def checktime(timestring):
@@ -145,26 +146,37 @@ def checktime(timestring):
             year = string.atoi(year)
             month = string.atoi(month)
             day = string.atoi(day)
-            return True
+            if year == 2015 and month >= 9 and month <= 12:
+                return True
+            if year == 2016 and month <= 8 and month >= 1:
+                return True
+            return False
         if len(times) == 2:
             year,month = times
             year = string.atoi(year)
             month = string.atoi(month)
-            return True
+            if year == 2015 and month >= 9:
+                return True
+            if year == 2016 and month <= 8:
+                return True
+            return False
         return False
     except:
         return False
 
 def getscholarshipscore(scholarshipinfo):
-    return getacademicscore(scholarshipinfo)+getshegongscore(scholarshipinfo)
+    return getacademicscore(scholarshipinfo)[0]+getshegongscore(scholarshipinfo)[0]
 
 def getacademicscore(scholarshipinfo):
-    return getconferencescore(scholarshipinfo)+\
-            getqikanscore(scholarshipinfo)+\
-            getpatentscore(scholarshipinfo)+\
-            getprojectscore(scholarshipinfo)+\
-            getstanardscore(scholarshipinfo)+\
-            getawardscore(scholarshipinfo)
+    confscore, wrongtime1 = getconferencescore(scholarshipinfo)
+    qikanscore, wrongtime2 = getqikanscore(scholarshipinfo)
+    patentscore, wrongtime3 = getpatentscore(scholarshipinfo)
+    projectscore, wrongtime4 = getprojectscore(scholarshipinfo)
+    standardscore, wrongtime5 = getstanardscore(scholarshipinfo)
+    awardscore,wrongtime6 = getawardscore(scholarshipinfo)
+    score = confscore+qikanscore+patentscore+projectscore+standardscore+awardscore
+    wrongtime = wrongtime1 or wrongtime2 or wrongtime3 or wrongtime4 or wrongtime5 or wrongtime6
+    return score, wrongtime
 
 def getpapernum(scholarshipinfo):
     num = 0
@@ -207,6 +219,7 @@ def getpatentnum(scholarshipinfo):
 def getconferencescore(scholarshipinfo):
     num = 0
     result = 0
+    wrongtime = False
     score = {'A full paper':5,'A short paper':3,'A poster':1,'A workshop':1,'A demo':1,
             'B full paper':3,'B short paper':1.5,'B poster':1,'B workshop':1,'B demo':1,
             'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
@@ -214,6 +227,7 @@ def getconferencescore(scholarshipinfo):
     while (scholarshipinfo.has_key('conf_author'+str(num))):
         if not checktime(scholarshipinfo['conf_time'+str(num)]):
             num += 1
+            wrongtime = True
             continue
         level_type = scholarshipinfo['conf_CCF'+str(num)]+' '+scholarshipinfo['conf_papertype'+str(num)]
         if scholarshipinfo.has_key('conf_yizuo'+str(num)):
@@ -221,11 +235,12 @@ def getconferencescore(scholarshipinfo):
                 if score.has_key(level_type):
                     result+= score[level_type]
         num += 1
-    return result
+    return result ,wrongtime
 
 def getqikanscore(scholarshipinfo):
     num = 0
     result = 0
+    wrongtime = False
     score = {'A full paper':5,'A short paper':3,'A poster':1,'A workshop':1,'A demo':1,
             'B full paper':3,'B short paper':1.5,'B poster':1,'B workshop':1,'B demo':1,
             'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
@@ -233,65 +248,78 @@ def getqikanscore(scholarshipinfo):
     while (scholarshipinfo.has_key('qikan_author'+str(num))):
         if not checktime(scholarshipinfo['qikan_time'+str(num)]):
             num += 1
+            wrongtime = True
             continue
         level = scholarshipinfo['qikan_CCF'+str(num)]+' '+scholarshipinfo['qikan_papertype'+str(num)]
         if score.has_key(level):
             result+= score[level]
         num += 1
-    return result
+    return result,wrongtime
 
 def getpatentscore(scholarshipinfo):
     result = 0
     num = 0
+    wrongtime = False
     while (scholarshipinfo.has_key('patent_author'+str(num))):
         if not checktime(scholarshipinfo['patent_time'+str(num)]):
             num += 1
+            wrongtime = True
             continue
         result += 1
         num += 1
-    return min(1,result)
+    return min(1,result),wrongtime
 
 def getprojectscore(scholarshipinfo):
     num = 0
     result = 0
+    wrongtime = False
     score = {u'国家级奖励':3,u'省级部一等奖项目':2,u'省级部二等奖项目':1}
     while (scholarshipinfo.has_key('project_author'+str(num))):
         if not checktime(scholarshipinfo['project_time'+str(num)]):
             num += 1
+            wrongtime = True
             continue
         level = scholarshipinfo['project_type'+str(num)]
         if score.has_key(level):
             result+= score[level]
         num += 1
-    return result
+    return result,wrongtime
 
 def getstanardscore(scholarshipinfo):
     result = 0
     num = 0
+    wrongtime = False
     while (scholarshipinfo.has_key('standard_author'+str(num))):
         if not checktime(scholarshipinfo['standard_time'+str(num)]):
             num += 1
+            wrongtime = True
             continue
         num += 1
         result += 2
-    return min(2,result)
+    return min(2,result),wrongtime
 
 def getawardscore(scholarshipinfo):
-    return 0
+    return 0, False
 
 def getshegongscore(scholarshipinfo):
-    return min(10,getjobscore(scholarshipinfo)+getaccuproscore(scholarshipinfo))
+    jobscore, wrongtime1 = getjobscore(scholarshipinfo)
+    accuproscore, wrongtime2 = getaccuproscore(scholarshipinfo)
+    wrongtime = wrongtime1 or wrongtime2
+    return min(10,jobscore+accuproscore), wrongtime
 
 def getjobscore(scholarshipinfo):
     num = 0
     result = 0
+    wrongtime = False
     score = {'A':5,'B':3,'C':0.5}
     while (scholarshipinfo.has_key('job_job'+str(num))):
         if not checktime(scholarshipinfo['job_starttime'+str(num)]):
             num += 1
+            wrongtime = True
             continue
         if not checktime(scholarshipinfo['job_endtime'+str(num)]):
             num += 1
+            wrongtime = True
             continue
         level = scholarshipinfo['job_level'+str(num)]
         try:
@@ -303,19 +331,21 @@ def getjobscore(scholarshipinfo):
         if score.has_key(level):
             result+= int(1000*score[level]*months/12.0)/1000.0
         num += 1
-    return result
+    return result,wrongtime
 
 def getaccuproscore(scholarshipinfo):
     num = 0
     result = 0
+    wrongtime = False
     score = {'A':5,'B':4,'C':4,'D':3,'E':2,'F1':3,\
     'F2':2,'F3':1,'G':1,'H':1,'I':2,'J':1,'K1':1.5,'K2':1,'K3':0.5}
     while (scholarshipinfo.has_key('accupro_accupro'+str(num))):
         if not checktime(scholarshipinfo['accupro_time'+str(num)]):
             num += 1
+            wrongtime = True
             continue
         level = scholarshipinfo['accupro_accupro'+str(num)]
         if score.has_key(level):
             result+= score[level]
         num += 1
-    return result
+    return result,wrongtime
