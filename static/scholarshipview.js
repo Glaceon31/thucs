@@ -45,8 +45,8 @@ function getotherscholarshipinfo(username){
           //tableinfo
           infolist=['conf','qikan','patent','project','standard','confaward','job','accupro']
           infosublist=[['author','yizuo','CCF','conf','paper','time','pages', 'papertype','lastyear'],
-          ['author','CCF','qikan','paper','time','pagenum','pages', 'papertype','lastyear'],
-          ['author','patent','publishid','time','lastyear'],
+          ['author','yizuo','CCF','qikan','paper','time','pagenum','pages', 'papertype','lastyear'],
+          ['author','yizuo','patent','publishid','time','lastyear'],
           ['author','project','time','type','lastyear'],
           ['author','standard','time','lastyear'],
           ['author','confaward','conf','CCF','time','lastyear'],
@@ -59,9 +59,13 @@ function getotherscholarshipinfo(username){
             sublist = infosublist[ind]
 
             while (result[info+"_"+sublist[0]+num]){
+
                 $("#"+info+"_add_row").click()
                 for (j=0;j<sublist.length;j++){
                   document.getElementById(info+"_"+sublist[j]+num).value=result[info+"_"+sublist[j]+num]
+                }
+                if ((sublist[1] == 'yizuo') && !(result[info+"_"+sublist[1]+num])){
+                  document.getElementById(info+"_"+sublist[1]+num).value='是'
                 }
               num += 1
             }
@@ -125,7 +129,10 @@ $(document).ready(function(){
       $('#qikan_addr'+qikan_i).html("<td>"+ (qikan_i+1) 
         +"</td><td><input readOnly type='text' name='qikan_author"+qikan_i
         +"' id='qikan_author"+qikan_i
-        +"' class='form-control px150'/> </td><td><input readOnly type='text' name='qikan_CCF"+qikan_i
+        +"' class='form-control px150'/> </td><td><input readOnly type='text' name='qikan_yizuo"+qikan_i
+        +"' id='qikan_yizuo"+qikan_i
+        +"' class='form-control px50'/>"
+        +"</td><td><input readOnly type='text' name='qikan_CCF"+qikan_i
         +"' id='qikan_CCF"+qikan_i
         +"' class='form-control px50'/>"
         +"</td><td><input readOnly type='text' name='qikan_qikan"+qikan_i
@@ -168,6 +175,9 @@ $(document).ready(function(){
       $('#patent_addr'+patent_i).html("<td>"+ (patent_i+1) 
         +"</td><td><input readOnly type='text' name='patent_author"+patent_i
         +"' id='patent_author"+patent_i
+        +"' class='form-control px150'/>"
+        +"</td><td><input readOnly type='text' name='patent_yizuo"+patent_i
+        +"' id='patent_yizuo"+patent_i
         +"' class='form-control px150'/>"
         +"</td><td><input readOnly type='text' name='patent_patent"+patent_i
         +"' id='patent_patent"+patent_i

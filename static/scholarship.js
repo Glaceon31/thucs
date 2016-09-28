@@ -76,8 +76,8 @@ function getscholarshipinfo(){
           //tableinfo
           infolist=['conf','qikan','patent','project','standard','confaward','job','accupro']
           infosublist=[['author','yizuo','CCF','conf','paper','time','pages', 'papertype','lastyear'],
-          ['author','CCF','qikan','paper','time','pagenum','pages', 'papertype','lastyear'],
-          ['author','patent','publishid','time','lastyear'],
+          ['author','yizuo','CCF','qikan','paper','time','pagenum','pages', 'papertype','lastyear'],
+          ['author','yizuo','patent','publishid','time','lastyear'],
           ['author','project','time','type','lastyear'],
           ['author','standard','time','lastyear'],
           ['author','confaward','conf','CCF','time','lastyear'],
@@ -169,7 +169,10 @@ $(document).ready(function(){
       $('#qikan_addr'+qikan_i).html("<td>"+ (qikan_i+1) 
         +"</td><td><input type='text' name='qikan_author"+qikan_i
         +"' id='qikan_author"+qikan_i
-        +"' class='form-control px150'/> </td><td><select name='qikan_CCF"+qikan_i
+        +"' class='form-control px150'/> </td><td><select name='qikan_yizuo"+qikan_i
+        +"' id='qikan_yizuo"+qikan_i
+        +"' class='form-control px50'/></select>"
+        +"</td><td><select name='qikan_CCF"+qikan_i
         +"' id='qikan_CCF"+qikan_i
         +"' class='form-control px50'/></select>"
         +"</td><td><input type='text' name='qikan_qikan"+qikan_i
@@ -200,6 +203,8 @@ $(document).ready(function(){
       document.getElementById("qikan_CCF"+qikan_i).add(new Option("C","C"))
       document.getElementById("qikan_CCF"+qikan_i).add(new Option("O","O"))
       document.getElementById("qikan_CCF"+qikan_i).add(new Option("其他","其他"))
+      document.getElementById("qikan_yizuo"+qikan_i).add(new Option("否","否"))
+      document.getElementById("qikan_yizuo"+qikan_i).add(new Option("是","是"))
       document.getElementById("qikan_papertype"+qikan_i).add(new Option("full paper","full paper"))
       document.getElementById("qikan_papertype"+qikan_i).add(new Option("poster","poster"))
       document.getElementById("qikan_papertype"+qikan_i).add(new Option("short paper","short paper"))
@@ -224,6 +229,9 @@ $(document).ready(function(){
         +"</td><td><input type='text' name='patent_author"+patent_i
         +"' id='patent_author"+patent_i
         +"' class='form-control px150'/>"
+        +"</td><td><select name='patent_yizuo"+patent_i
+        +"' id='patent_yizuo"+patent_i
+        +"' class='form-control px50'/></select>"
         +"</td><td><input type='text' name='patent_patent"+patent_i
         +"' id='patent_patent"+patent_i
         +"' class='form-control px150'/>"
@@ -238,6 +246,8 @@ $(document).ready(function(){
         +"' class='form-control px100'/></select></td>");
 
       $('#patent').append('<tr id="patent_addr'+(patent_i+1)+'"></tr>');
+      document.getElementById("patent_yizuo"+patent_i).add(new Option("否","否"))
+      document.getElementById("patent_yizuo"+patent_i).add(new Option("是","是"))
       document.getElementById("patent_lastyear"+patent_i).add(new Option("否","否"))
       document.getElementById("patent_lastyear"+patent_i).add(new Option("是","是"))
       patent_i++; 

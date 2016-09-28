@@ -220,7 +220,11 @@ def getpapernum(scholarshipinfo):
             continue
         level = scholarshipinfo['qikan_CCF'+str(num)]
         if score.has_key(level):
-            result[score[level]] += 1
+            if scholarshipinfo.has_key('qikan_yizuo'+str(num)):
+                if scholarshipinfo['qikan_yizuo'+str(num)] == u'是':
+                    result[score[level]] += 1
+            else:
+                result[score[level]] += 1
         num += 1
     return result
 
@@ -272,7 +276,11 @@ def getqikanscore(scholarshipinfo):
             continue
         level = scholarshipinfo['qikan_CCF'+str(num)]+' '+scholarshipinfo['qikan_papertype'+str(num)]
         if score.has_key(level):
-            result+= score[level]
+            if scholarshipinfo.has_key('qikan_yizuo'+str(num)):
+                if scholarshipinfo['qikan_yizuo'+str(num)] == u'是':
+                    result+= score[level]
+            else:
+                result+= score[level]
         num += 1
     return result,wrongtime
 
@@ -285,7 +293,11 @@ def getpatentscore(scholarshipinfo):
             num += 1
             wrongtime = True
             continue
-        result += 1
+        if scholarshipinfo.has_key('patent_yizuo'+str(num)):
+            if scholarshipinfo['patent_yizuo'+str(num)] == u'是':
+                result += 1
+        else:
+            result += 1
         num += 1
     return min(1,result),wrongtime
 
