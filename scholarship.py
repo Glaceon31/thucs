@@ -203,6 +203,9 @@ def getpapernum(scholarshipinfo):
     result = [0,0,0,0]
     score = {'A':0,'B':1,'C':2,'O':3}
     while scholarshipinfo.has_key('conf_author'+str(num)):
+        if scholarshipinfo['conf_author'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['conf_time'+str(num)],scholarshipinfo['conf_lastyear'+str(num)]):
             num += 1
             continue
@@ -215,6 +218,9 @@ def getpapernum(scholarshipinfo):
     
     num = 0
     while scholarshipinfo.has_key('qikan_author'+str(num)):
+        if scholarshipinfo['qikan_author'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['qikan_time'+str(num)],scholarshipinfo['qikan_lastyear'+str(num)]):
             num += 1
             continue
@@ -232,6 +238,9 @@ def getpatentnum(scholarshipinfo):
     result = 0
     num = 0
     while (scholarshipinfo.has_key('patent_author'+str(num))):
+        if scholarshipinfo['patent_author'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['patent_time'+str(num)],scholarshipinfo['patent_lastyear'+str(num)]):
             num += 1
             continue
@@ -249,6 +258,9 @@ def getconferencescore(scholarshipinfo):
             'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
             'O full paper':1}
     while (scholarshipinfo.has_key('conf_author'+str(num))):
+        if scholarshipinfo['conf_author'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['conf_time'+str(num)],scholarshipinfo['conf_lastyear'+str(num)]):
             num += 1
             wrongtime = True
@@ -270,6 +282,9 @@ def getqikanscore(scholarshipinfo):
             'C full paper':1.5,'C short paper':1,'C poster':1,'C workshop':1,'C demo':1,
             'O full paper':1}
     while (scholarshipinfo.has_key('qikan_author'+str(num))):
+        if scholarshipinfo['qikan_author'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['qikan_time'+str(num)],scholarshipinfo['qikan_lastyear'+str(num)]):
             num += 1
             wrongtime = True
@@ -289,6 +304,9 @@ def getpatentscore(scholarshipinfo):
     num = 0
     wrongtime = False
     while (scholarshipinfo.has_key('patent_author'+str(num))):
+        if scholarshipinfo['patent_author'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['patent_time'+str(num)],scholarshipinfo['patent_lastyear'+str(num)]):
             num += 1
             wrongtime = True
@@ -307,6 +325,9 @@ def getprojectscore(scholarshipinfo):
     wrongtime = False
     score = {u'国家级奖励':3,u'省级部一等奖项目':2,u'省级部二等奖项目':1}
     while (scholarshipinfo.has_key('project_author'+str(num))):
+        if scholarshipinfo['project_author'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['project_time'+str(num)],scholarshipinfo['project_lastyear'+str(num)]):
             num += 1
             wrongtime = True
@@ -322,6 +343,9 @@ def getstanardscore(scholarshipinfo):
     num = 0
     wrongtime = False
     while (scholarshipinfo.has_key('standard_author'+str(num))):
+        if scholarshipinfo['standard_author'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['standard_time'+str(num)],scholarshipinfo['standard_lastyear'+str(num)]):
             num += 1
             wrongtime = True
@@ -345,6 +369,9 @@ def getjobscore(scholarshipinfo):
     wrongtime = False
     score = {'A':5,'B':3,'C':0.5}
     while (scholarshipinfo.has_key('job_job'+str(num))):
+        if scholarshipinfo['job_job'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['job_starttime'+str(num)]):
             num += 1
             wrongtime = True
@@ -372,6 +399,9 @@ def getaccuproscore(scholarshipinfo):
     score = {'A':5,'B':4,'C':4,'D':3,'E':2,'F1':3,\
     'F2':2,'F3':1,'G':1,'H':1,'I':2,'J':1,'K1':1.5,'K2':1,'K3':0.5}
     while (scholarshipinfo.has_key('accupro_accupro'+str(num))):
+        if scholarshipinfo['accupro_accupro'+str(num)] == "":
+            num +=1
+            continue
         if not checktime(scholarshipinfo['accupro_time'+str(num)]):
             num += 1
             wrongtime = True
