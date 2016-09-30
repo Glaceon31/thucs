@@ -14,6 +14,7 @@ client = MongoClient(connect=False)
 db = client.thucs
 
 
+
 @app.route('/register')
 def register():
 	return render_template('register.html')

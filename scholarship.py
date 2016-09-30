@@ -9,6 +9,7 @@ from tools import *
 #from user import getuserinfo
 import re
 import string
+canapply = 0
 
 userdb = db.user
 logdb = db.log
@@ -16,6 +17,8 @@ logdb = db.log
 @app.route('/scholarshipapply', methods=['GET','POST'])
 def scholarshipapply():
     #print request.form
+    if not canapply:
+        return '申请时间已过'
     if request.form.has_key(u'提交'):
         #print request.form
         data = immutabledict2dict(request.form)
