@@ -188,7 +188,7 @@ def checktime(timestring, lastyear=''):
         return False
 
 def getscholarshipscore(scholarshipinfo):
-    return getacademicscore(scholarshipinfo)[0]+getshegongscore(scholarshipinfo)[0]
+    return int(1000*(0.7*getacademicscore(scholarshipinfo)[0]+0.3*getshegongscore(scholarshipinfo)[0]))/1000.0
 
 def getacademicscore(scholarshipinfo):
     confscore, wrongtime1 = getconferencescore(scholarshipinfo)
