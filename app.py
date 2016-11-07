@@ -54,8 +54,10 @@ def scholarshipcheck(username):
 def fonts(path):
 	return redirect('/static/fonts/'+path)
 
+
 from user import *
 from scholarship import *
+from mail import *
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port = 7654)

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+  {% include 'header.html' %}
+  <script type="text/javascript">
+  </script>
+  <body style="padding-top: 40px">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+          <ul class="nav navbar-nav">
+            <li><a href="#">清华大学计算机系学生信息系统</a></li>
+         <li><a href="#">首页</a></li>
+         <li><a href="#">新闻</a></li>
+         <li><a href="/scholarship">奖学金</a></li>
+         <li class="active"><a href="#">内部页面</a></li>
+          </ul>
+      </div>
+    </nav>
+  
+
+ <div id="wrapper">
+
+  
+      <div id="sidebar-wrapper" style="background:ghostwhite">
+        <ul class="sidebar-nav">
+          <li class="sidebar-brand active"><a href="/scholarship">邮件发送</a></li>
+        </ul>
+      </div>
+        
+      <div id="page-content-wrapper" class="container-fluid">
+        
+        <div class="span6" style="margin-left:10px;margin-top:10px">
+          <form class="form-horizontal" method='POST' action=''>
+          <div class="control-group">
+            <label class="control-label" for="input01">邮件标题</label>
+              <div class="controls">
+              <input type="text" placeholder="" class="input-xlarge" id="title" name="title" >
+              </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input01">收件人</label>
+            <div class="controls">
+              <textarea rows="3" cols="20" id="receiver" name="receiver"></textarea>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input01">内容</label>
+            <div class="controls">
+              <textarea rows="3" cols="20" id="message" name="message"> </textarea>
+            </div>
+          </div>
+          <input type='submit' name='提交'>
+          </form>
+        </div>
+        <!--
+        <div class="span3" style="margin-left:10px;margin-top:10px">
+          {% include 'module_user.html' %}
+        </div>-->
+      </div>
+  </div>
+
+
+ 	</body>
+  
+</html>
