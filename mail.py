@@ -16,12 +16,15 @@ from email.header import Header
 def send(sender, receivers,title, message):
 	msg = MIMEText(message,'plain','utf-8')
 
-	me = 'thucs@tsinghua.edu.cn'
-	#you = 'grit31@126.com'
+	me = ('%s<thucs@tsinghua.edu.cn>')%(Header(sender,'utf-8'))
+	you = ';'.join(receivers)
+	print sender
 
 	msg['Subject'] = Header(title,'utf-8')
-	msg['From'] = Header(sender,'utf-8')
-	#msg['To'] = you
+	msg['From'] = me
+	msg['To'] = you
+	msg["Accept-Language"]="zh-CN"
+	msg["Accept-Charset"]="ISO-8859-1,utf-8"
 
 	try:
 		s = smtplib.SMTP('localhost')
