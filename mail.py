@@ -13,14 +13,14 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 
-def send(receivers, title, message):
+def send(sender, receivers,title, message):
 	msg = MIMEText(message,'plain','utf-8')
 
 	me = 'thucs@tsinghua.edu.cn'
 	#you = 'grit31@126.com'
 
 	msg['Subject'] = Header(title,'utf-8')
-	msg['From'] = Header("清华大学计算机系研团",'utf-8')
+	msg['From'] = Header(sender,'utf-8')
 	#msg['To'] = you
 
 	try:
@@ -31,6 +31,7 @@ def send(receivers, title, message):
 		return True
 	except:
 		print 'fail'
+		traceback.print_exc()
 		return False
 
 @app.route('/mail', methods=['GET','POST'])
@@ -38,11 +39,13 @@ def mail():
 	if request.form.has_key(u'提交'):
 		data = immutabledict2dict(request.form)
 		print data
-		return 
 		message = u"发送失败"
 		try:
-			receivers = [re.strip() for re in data[receiver].split(';')]
-			send(receivers, data['title'], data['message'])
+			if data['password'] != 'thucs':
+				message = u"密码错误"
+				assert 0 == 1
+			receivers = [re.strip() for re in data['receiver'].split(';')]
+			send(data['sender'],receivers, data['title'], data['message'])
 			message = u"发送成功"
 		except:
 			traceback.print_exc()
