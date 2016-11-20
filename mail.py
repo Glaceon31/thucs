@@ -9,6 +9,12 @@ import random
 from tools import *
 import smtplib
 
+#google mail api
+from apiclient import discovery
+from oauth2client import client
+from oauth2client import tools
+from oauth2client.file import Storage
+
 # Import the email modules we'll need
 from email.mime.text import MIMEText
 from email.header import Header
@@ -31,6 +37,25 @@ def send(sender, receivers,title, message):
 		s.sendmail(me, receivers, msg.as_string())
 		s.quit()
 		print 'success'
+		return True
+	except:
+		print 'fail'
+		traceback.print_exc()
+		return False
+
+def gmail_send(sender, receivers,title, message):
+	msg = MIMEText(message,'plain','utf-8')
+	me = ('%s<thucs@tsinghua.edu.cn>')%(Header(sender,'utf-8'))
+	#message = MIMEMultipart()
+	msg['to'] = to
+	msg['from'] = me
+	msg['subject'] = Header(title,'utf-8')
+
+	encoded = {'raw': base64.urlsafe_b64encode(msg.as_string())}
+	try:
+		message = (service.users().messages().send(userId=user_id, body=message)
+               .execute())
+		print 'Message Id: %s' % message['id']
 		return True
 	except:
 		print 'fail'
