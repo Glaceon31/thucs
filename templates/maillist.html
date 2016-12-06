@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+  {% include 'header.html' %}
+  <script type="text/javascript">
+  function getaddress(maillist){
+    $.ajax({
+      type:"POST",
+      url:"/getmailaddresses/"+maillist,
+      success:function userinfo_return(data){
+        document.getElementById('info').innerHTML = '邮件地址'
+        document.getElementById('infozone').innerHTML = data
+      }
+    })
+  }
+
+  function getmember(maillist){
+    $.ajax({
+      type:"POST",
+      url:"/getmembers/"+maillist,
+      success:function userinfo_return(data){
+        result = JSON.parse(data)
+        html = '<table><tr><td width="80px">姓名</td><td width="110px">学号</td><td>邮箱</td></tr>'
+        for (i=0;i<result.length;i++){
+            html += '<tr>'
+            html += '<td>'+result[i][1]+'</td>'
+            html += '<td>'+result[i][0]+'</td>'
+            html += '<td>'+result[i][2]+'</td>'
+            html += '</tr>'
+        }
+        html += '</table>'
+        document.getElementById('info').innerHTML = '收件人列表'
+        document.getElementById('infozone').innerHTML = html
+      }
+    })
+  }
+  </script>
+  <body style="padding-top: 40px">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+          <ul class="nav navbar-nav">
+            <li><a href="#">清华大学计算机系学生信息系统</a></li>
+         <li><a href="#">首页</a></li>
+         <li><a href="#">新闻</a></li>
+         <li><a href="/scholarship">奖学金</a></li>
+         <li class="active"><a href="#">内部页面</a></li>
+          </ul>
+      </div>
+    </nav>
+  
+
+ <div id="wrapper">
+
+  
+      <div id="sidebar-wrapper" style="background:ghostwhite">
+        <ul class="sidebar-nav">
+          <li class="sidebar-brand active"><a href="/scholarship">邮件发送</a></li>
+        </ul>
+      </div>
+        
+      <div id="page-content-wrapper" class="container-fluid">
+        
+        <div class="span6" style="margin-left:10px;margin-top:10px">
+          <div class="control-group">
+            <label class="control-label" for="input01">邮件列表</label>
+              <div class="controls">
+              <select id="maillist" onchange="document.getElementById('address').value=document.getElementById('maillist').value">
+                <option value=""></option>
+                <option value="thucs_graduate@googlegroups.com">全体</option>
+                <option value="thucs_16@googlegroups.com">16级</option>
+                <option value="thucs_15@googlegroups.com">15级</option>
+                <option value="thucs_14@googlegroups.com">14级</option>
+                <option value="thucs_13@googlegroups.com">13级</option>
+                <option value="thucs_12@googlegroups.com">12级</option>
+                <option value="thucs_11@googlegroups.com">11级及以前</option>
+              </select>
+              </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input01">邮件地址</label>
+              <div class="controls">
+              <input type="text" placeholder="" class="input-xlarge" id="address" value='' readonly>
+              </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input01">操作</label>
+              <div class="controls">
+              <button onclick="getmember(document.getElementById('maillist').value)">收件人列表</button>
+              <button>信息列表</button>
+              <button onclick="getaddress(document.getElementById('maillist').value)">地址序列</button>
+              </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input01" id="info"></label>
+            <div class="controls">
+              <p id="infozone" width='720px'></p>
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="span3" style="margin-left:10px;margin-top:10px">
+          {% include 'module_user.html' %}
+        </div>-->
+      </div>
+  </div>
+
+
+ 	</body>
+  
+</html>
