@@ -2,11 +2,11 @@
 <html>
 
   {% include 'header.html' %}
-  <script type="text/javascript" src="/static/scholarshipview.js?1.6"></script>
-  <link rel="stylesheet" href="/static/scholarship.css" type="text/css">
+  <script type="text/javascript" src="/static/admin.js?1.91"></script>
+  <link rel="stylesheet" href="/static/scholarship.css?v1.1" type="text/css">
   <script type="text/javascript">
   function init(){
-    getotherscholarshipinfo({{username}})
+    getadminscholarshipinfo({{username}})
     document.getElementById("viewapply").href="/scholarshipview/"+getCookie('usernamethu')
     document.getElementById("apply").href="/scholarshipapply/"+getCookie('usernamethu')
     getscores({{username}})
@@ -15,7 +15,7 @@
    
   </script>
 
-  <body onload="checklogin();init();" style="padding-top: 40px">
+  <body onload="init();" style="padding-top: 40px">
 
 {% include 'module_scholarshipnav.html' %}
   
@@ -28,7 +28,7 @@
       <div id="page-content-wrapper">
         
         <div >
-          {% include 'module_scholarshipview.html' %}
+          {% include 'module_scholarshipadminview.html' %}
           
         </div>
 

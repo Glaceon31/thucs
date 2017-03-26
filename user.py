@@ -11,7 +11,6 @@ import re
 userdb = db.user
 logdb = db.log
 
-
 userinfolist = ['username', 'name']
 
 def checkusername(username):

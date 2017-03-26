@@ -11,7 +11,7 @@ function applycancel(){
         result = JSON.parse(data)
         if (result['success'] == 1){
           alert(result['message'])
-          window.location='/scholarshipapply'
+          window.location='/scholarship'
         }
         else{
           alert(result['message'])
@@ -94,7 +94,15 @@ function getscholarshipinfo(){
                 for (j=0;j<sublist.length;j++){
                   document.getElementById(info+"_"+sublist[j]+num).value=result[info+"_"+sublist[j]+num]
                 }
-              num += 1
+              
+              if (result[info+"_comment"+num]){
+                  document.getElementById(info+"_comment"+num).value = result[info+"_comment"+num]
+                }
+
+                if (result[info+"_valid"+num]){
+                  document.getElementById(info+"_valid"+num).value = result[info+"_valid"+num]
+                }
+                num += 1
             }
           } 
         }
@@ -111,7 +119,7 @@ $(document).ready(function(){
       var conf_i=0;
      $("#conf_add_row").click(function(){
       $('#conf_addr'+conf_i).html("<td>"+ (conf_i+1) 
-        +"</td><td><input type='text' name='conf_author"+conf_i
+        +"</td><td><input type='text' required name='conf_author"+conf_i
         +"' id='conf_author"+conf_i
         +"' class='form-control px150'/> </td><td><select name='conf_yizuo"+conf_i
         +"' id='conf_yizuo"+conf_i
@@ -119,16 +127,16 @@ $(document).ready(function(){
         +"</td><td><select name='conf_CCF"+conf_i
         +"' id='conf_CCF"+conf_i
         +"' class='form-control px50'/></select>"
-        +"</td><td><input type='text' name='conf_conf"+conf_i
+        +"</td><td><input type='text' required name='conf_conf"+conf_i
         +"' id='conf_conf"+conf_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='conf_paper"+conf_i
+        +"</td><td><input type='text' required name='conf_paper"+conf_i
         +"' id='conf_paper"+conf_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='conf_time"+conf_i
+        +"</td><td><input type='date' required name='conf_time"+conf_i
         +"' id='conf_time"+conf_i
         +"' class='form-control px100'/>"
-        +"</td><td><input type='text' name='conf_pages"+conf_i
+        +"</td><td><input type='number' required name='conf_pages"+conf_i
         +"' id='conf_pages"+conf_i
         +"' class='form-control px50'/>"
         +"</td><td><select name='conf_papertype"+conf_i
@@ -136,7 +144,11 @@ $(document).ready(function(){
         +"' class='form-control px100'/></select>"
         +"</td><td><select name='conf_lastyear"+conf_i
         +"' id='conf_lastyear"+conf_i
-        +"' class='form-control px100'/></select></td>");
+        +"' class='form-control px100'/></select></td><td><input style='display:none' type='text' name='conf_comment"+conf_i
+        +"' id='conf_comment"+conf_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' value='1' name='conf_valid"+conf_i
+        +"' id='conf_valid"+conf_i
+        +"' class='form-control px100'/></td>");
 
       $('#conf').append('<tr id="conf_addr'+(conf_i+1)+'"></tr>');
       document.getElementById("conf_yizuo"+conf_i).add(new Option("是","是"))
@@ -181,10 +193,10 @@ $(document).ready(function(){
         +"</td><td><input type='text' name='qikan_paper"+qikan_i
         +"' id='qikan_paper"+qikan_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='qikan_time"+qikan_i
+        +"</td><td><input type='date' name='qikan_time"+qikan_i
         +"' id='qikan_time"+qikan_i
         +"' class='form-control px100'/>"
-        +"</td><td><input type='text' name='qikan_pagenum"+qikan_i
+        +"</td><td><input type='number' name='qikan_pagenum"+qikan_i
         +"' id='qikan_pagenum"+qikan_i
         +"' class='form-control px50'/>"
         +"</td><td><input type='text' name='qikan_pages"+qikan_i
@@ -195,7 +207,11 @@ $(document).ready(function(){
         +"' class='form-control px100'/></select>"
         +"</td><td><select name='qikan_lastyear"+qikan_i
         +"' id='qikan_lastyear"+qikan_i
-        +"' class='form-control px100'/></select></td>");
+        +"' class='form-control px100'/></select></td><td><input style='display:none' type='text' name='qikan_comment"+qikan_i
+        +"' id='qikan_comment"+qikan_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' value='1' name='qikan_valid"+qikan_i
+        +"' id='qikan_valid"+qikan_i
+        +"' class='form-control px100'/></td>");
 
       $('#qikan').append('<tr id="qikan_addr'+(qikan_i+1)+'"></tr>');
       document.getElementById("qikan_CCF"+qikan_i).add(new Option("A","A"))
@@ -238,12 +254,16 @@ $(document).ready(function(){
         +"</td><td><input type='text' name='patent_publishid"+patent_i
         +"' id='patent_publishid"+patent_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='patent_time"+patent_i
+        +"</td><td><input type='date' name='patent_time"+patent_i
         +"' id='patent_time"+patent_i
         +"' class='form-control px100'/>"
         +"</td><td><select name='patent_lastyear"+patent_i
         +"' id='patent_lastyear"+patent_i
-        +"' class='form-control px100'/></select></td>");
+        +"' class='form-control px100'/></select></td><td><input style='display:none' type='text' name='patent_comment"+patent_i
+        +"' id='patent_comment"+patent_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' value='1' name='patent_valid"+patent_i
+        +"' id='patent_valid"+patent_i
+        +"' class='form-control px100'/></td>");
 
       $('#patent').append('<tr id="patent_addr'+(patent_i+1)+'"></tr>');
       document.getElementById("patent_yizuo"+patent_i).add(new Option("否","否"))
@@ -269,7 +289,7 @@ $(document).ready(function(){
         +"</td><td><input type='text' name='project_project"+project_i
         +"' id='project_project"+project_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='project_time"+project_i
+        +"</td><td><input type='date' name='project_time"+project_i
         +"' id='project_time"+project_i
         +"' class='form-control px150'/>"
         +"</td><td><select name='project_type"+project_i
@@ -277,7 +297,11 @@ $(document).ready(function(){
         +"' class='form-control px100'/>"
         +"</td><td><select name='project_lastyear"+project_i
         +"' id='project_lastyear"+project_i
-        +"' class='form-control px100'/></select></td>");
+        +"' class='form-control px100'/></select></td><td><input style='display:none' type='text' name='project_comment"+project_i
+        +"' id='project_comment"+project_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' value='1' name='project_valid"+project_i
+        +"' id='project_valid"+project_i
+        +"' class='form-control px100'/></td>");
 
       $('#project').append('<tr id="project_addr'+(project_i+1)+'"></tr>');
       document.getElementById("project_type"+project_i).add(new Option("国家级奖励","国家级奖励"))
@@ -304,12 +328,16 @@ $(document).ready(function(){
         +"</td><td><input type='text' name='standard_standard"+standard_i
         +"' id='standard_standard"+standard_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='standard_time"+standard_i
+        +"</td><td><input type='date' name='standard_time"+standard_i
         +"' id='standard_time"+standard_i
         +"' class='form-control px100'/>"
         +"</td><td><select name='standard_lastyear"+standard_i
         +"' id='standard_lastyear"+standard_i
-        +"' class='form-control px100'/></select></td>");
+        +"' class='form-control px100'/></select></td><td><input style='display:none' type='text' name='standard_comment"+standard_i
+        +"' id='standard_comment"+standard_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' value='1' name='standard_valid"+standard_i
+        +"' id='standard_valid"+standard_i
+        +"' class='form-control px100'/></td>");
 
       $('#standard').append('<tr id="standard_addr'+(standard_i+1)+'"></tr>');
       document.getElementById("standard_lastyear"+standard_i).add(new Option("否","否"))
@@ -339,12 +367,16 @@ $(document).ready(function(){
         +"</td><td><input type='text' name='confaward_CCF"+confaward_i
         +"' id='confaward_CCF"+confaward_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='confaward_time"+confaward_i
+        +"</td><td><input type='date' name='confaward_time"+confaward_i
         +"' id='confaward_time"+confaward_i
         +"' class='form-control px100'/>"
         +"</td><td><select name='confaward_lastyear"+confaward_i
         +"' id='confaward_lastyear"+confaward_i
-        +"' class='form-control px100'/></select></td>");
+        +"' class='form-control px100'/></select></td><td><input style='display:none' type='text' name='confaward_comment"+confaward_i
+        +"' id='confaward_comment"+confaward_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' value='1' name='confaward_valid"+confaward_i
+        +"' id='confaward_valid"+confaward_i
+        +"' class='form-control px100'/></td>");
 
       $('#confaward').append('<tr id="confaward_addr'+(confaward_i+1)+'"></tr>');
       document.getElementById("confaward_lastyear"+confaward_i).add(new Option("否","否"))
@@ -368,14 +400,18 @@ $(document).ready(function(){
         +"</td><td><select name='job_level"+job_i
         +"' id='job_level"+job_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='job_starttime"+job_i
+        +"</td><td><input type='date' name='job_starttime"+job_i
         +"' id='job_starttime"+job_i
         +"' class='form-control px100'/>"
-        +"</td><td><input type='text' name='job_endtime"+job_i
+        +"</td><td><input type='date' name='job_endtime"+job_i
         +"' id='job_endtime"+job_i
         +"' class='form-control px100'/>"
-        +"</td><td><input type='text' name='job_months"+job_i
+        +"</td><td><input type='number' name='job_months"+job_i
         +"' id='job_months"+job_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' name='job_comment"+job_i
+        +"' id='job_comment"+job_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' value='1' name='job_valid"+job_i
+        +"' id='job_valid"+job_i
         +"' class='form-control px100'/></td>");
 
       $('#job').append('<tr id="job_addr'+(job_i+1)+'"></tr>');
@@ -402,8 +438,12 @@ $(document).ready(function(){
         +"</td><td><input type='text' name='accupro_content"+accupro_i
         +"' id='accupro_content"+accupro_i
         +"' class='form-control px150'/>"
-        +"</td><td><input type='text' name='accupro_time"+accupro_i
+        +"</td><td><input type='date' name='accupro_time"+accupro_i
         +"' id='accupro_time"+accupro_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' name='accupro_comment"+accupro_i
+        +"' id='accupro_comment"+accupro_i
+        +"' class='form-control px100'/></td><td><input style='display:none' type='text' value='1' name='accupro_valid"+accupro_i
+        +"' id='accupro_valid"+accupro_i
         +"' class='form-control px100'/></td>");
 
       $('#accupro').append('<tr id="accupro_addr'+(accupro_i+1)+'"></tr>');

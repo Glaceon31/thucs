@@ -3,7 +3,7 @@
 
   {% include 'header.html' %}
   <script type="text/javascript">
-  function shownotify(){
+  function showgongshi(){
       d = {}
       d['userid'] = getCookie('useridthu')
       d['username'] = getCookie('usernamethu')
@@ -11,7 +11,7 @@
 
       $.ajax({
       type:"POST",
-      url:"/getnotify",
+      url:"/getgongshi",
       data: d,
       success:function userinfo_return(data){
         result = JSON.parse(data)
@@ -32,7 +32,7 @@
 
   function init(){
     showname()
-    shownotify()
+    showgongshi()
     document.getElementById("viewapply").href="/scholarshipview/"+getCookie('usernamethu')
     document.getElementById("apply").href="/scholarshipapply/"+getCookie('usernamethu')
   }

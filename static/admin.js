@@ -17,7 +17,7 @@ function getscores(username){
 }
 
 
-function getotherscholarshipinfo(username){
+function getadminscholarshipinfo(username){
   
       d = {}
       d['userid'] = getCookie('useridthu')
@@ -31,6 +31,10 @@ function getotherscholarshipinfo(username){
       success:function userinfo_return(data){
         result = JSON.parse(data)
         if (result['success'] == 1){
+          if (result['reported'])
+            document.getElementById('reported').value = result['reported']
+          if (result['zige'])
+            document.getElementById('zige').value = result['zige']
           result = JSON.parse(result['scholarshipinfo'])
           //inputinfo
           infolist = ['name','class','sex','school_roll','political','grade','suo'
@@ -71,10 +75,7 @@ function getotherscholarshipinfo(username){
                   document.getElementById(info+"_comment"+num).value = result[info+"_comment"+num]
                 }
                 if (result[info+"_valid"+num]){
-
-                  if (result[info+"_valid"+num] == '0') {
-                    document.getElementById(info+"_addr"+num).style.background='red'
-                  }
+                  document.getElementById(info+"_valid"+num).value = result[info+"_valid"+num]
                 }
               num += 1
             }
@@ -118,12 +119,15 @@ $(document).ready(function(){
         +"' class='form-control px100'/>"
         +"</td><td><input readOnly type='text' name='conf_lastyear"+conf_i
         +"' id='conf_lastyear"+conf_i
-        +"' class='form-control px100'/></td><td><input readOnly type='text' name='conf_comment"+conf_i
+        +"' class='form-control px100'/></td><td><input type='text' name='conf_comment"+conf_i
         +"' id='conf_comment"+conf_i
-        +"' class='form-control px100'/></td>");
+        +"' class='form-control px100'/></td><td><select type='text' name='conf_valid"+conf_i
+        +"' id='conf_valid"+conf_i
+        +"' class='form-control px100'></select></td>");
 
       $('#conf').append('<tr id="conf_addr'+(conf_i+1)+'"></tr>');
-      
+      document.getElementById("conf_valid"+conf_i).add(new Option("有效","1"))
+      document.getElementById("conf_valid"+conf_i).add(new Option("无效","0"))
       
       conf_i++; 
   });
@@ -166,13 +170,17 @@ $(document).ready(function(){
         +"' class='form-control px100'/>"
         +"</td><td><input readOnly type='text' name='qikan_lastyear"+qikan_i
         +"' id='qikan_lastyear"+qikan_i
-        +"' class='form-control px100'/></td><td><input readOnly type='text' name='qikan_comment"+qikan_i
+        +"' class='form-control px100'/></td><td><input type='text' name='qikan_comment"+qikan_i
         +"' id='qikan_comment"+qikan_i
-        +"' class='form-control px100'/></td>");
+        +"' class='form-control px100'/></td><td><select type='text' name='qikan_valid"+qikan_i
+        +"' id='qikan_valid"+qikan_i
+        +"' class='form-control px100'></select></td>");
 
       $('#qikan').append('<tr id="qikan_addr'+(qikan_i+1)+'"></tr>');
 
-      
+      document.getElementById("qikan_valid"+qikan_i).add(new Option("有效","1"))
+      document.getElementById("qikan_valid"+qikan_i).add(new Option("无效","0"))
+
       qikan_i++; 
   });
      $("#qikan_delete_row").click(function(){
@@ -203,12 +211,16 @@ $(document).ready(function(){
         +"' class='form-control px100'/>"
         +"</td><td><input readOnly type='text' name='patent_lastyear"+patent_i
         +"' id='patent_lastyear"+patent_i
-        +"' class='form-control px100'/></td><td><input readOnly type='text' name='patent_comment"+patent_i
+        +"' class='form-control px100'/></td><td><select type='text' name='patent_comment"+patent_i
         +"' id='patent_comment"+patent_i
+        +"' class='form-control px100'/></td><td><select name='patent_valid"+patent_i
+        +"' id='patent_valid"+patent_i
         +"' class='form-control px100'/></td>");
 
       $('#patent').append('<tr id="patent_addr'+(patent_i+1)+'"></tr>');
-      
+      document.getElementById("qikan_valid"+patent_i).add(new Option("有效","1"))
+      document.getElementById("qikan_valid"+patent_i).add(new Option("无效","0"))
+
       patent_i++; 
   });
      $("#patent_delete_row").click(function(){
@@ -236,12 +248,16 @@ $(document).ready(function(){
         +"' class='form-control px100'/>"
         +"</td><td><input readOnly type='text' name='project_lastyear"+project_i
         +"' id='project_lastyear"+project_i
-        +"' class='form-control px100'/></td><td><input readOnly type='text' name='project_comment"+project_i
+        +"' class='form-control px100'/></td><td><input type='text' name='project_comment"+project_i
+        +"' id='project_comment"+project_i
+        +"' class='form-control px100'/></td><td><select name='project_comment"+project_i
         +"' id='project_comment"+project_i
         +"' class='form-control px100'/></td>");
 
       $('#project').append('<tr id="project_addr'+(project_i+1)+'"></tr>');
-      
+      document.getElementById("qikan_valid"+project_i).add(new Option("有效","1"))
+      document.getElementById("qikan_valid"+project_i).add(new Option("无效","0"))
+
       project_i++; 
   });
      $("#project_delete_row").click(function(){
@@ -266,11 +282,15 @@ $(document).ready(function(){
         +"' class='form-control px100'/>"
         +"</td><td><input readOnly type='text' name='standard_lastyear"+standard_i
         +"' id='standard_lastyear"+standard_i
-        +"' class='form-control px100'/></td><td><input readOnly type='text' name='standard_comment"+standard_i
+        +"' class='form-control px100'/></td><td><input type='text' name='standard_comment"+standard_i
+        +"' id='standard_comment"+standard_i
+        +"' class='form-control px100'/></td><td><select name='standard_comment"+standard_i
         +"' id='standard_comment"+standard_i
         +"' class='form-control px100'/></td>");
 
       $('#standard').append('<tr id="standard_addr'+(standard_i+1)+'"></tr>');
+      document.getElementById("qikan_valid"+standard_i).add(new Option("有效","1"))
+      document.getElementById("qikan_valid"+standard_i).add(new Option("无效","0"))
 
       standard_i++; 
   });
@@ -302,11 +322,15 @@ $(document).ready(function(){
         +"' class='form-control px100'/>"
         +"</td><td><input readOnly type='text' name='confaward_lastyear"+confaward_i
         +"' id='confaward_lastyear"+confaward_i
-        +"' class='form-control px100'/></td><td><input readOnly type='text' name='confaward_comment"+confaward_i
+        +"' class='form-control px100'/></td><td><input type='text' name='confaward_comment"+confaward_i
+        +"' id='confaward_comment"+confaward_i
+        +"' class='form-control px100'/></td><td><select name='confaward_comment"+confaward_i
         +"' id='confaward_comment"+confaward_i
         +"' class='form-control px100'/></td>");
 
       $('#confaward').append('<tr id="confaward_addr'+(confaward_i+1)+'"></tr>');
+      document.getElementById("qikan_valid"+confaward_i).add(new Option("有效","1"))
+      document.getElementById("qikan_valid"+confaward_i).add(new Option("无效","0"))
      
   });
      $("#confaward_delete_row").click(function(){
@@ -334,12 +358,15 @@ $(document).ready(function(){
         +"' class='form-control px100'/>"
         +"</td><td><input readOnly type='text' name='job_months"+job_i
         +"' id='job_months"+job_i
-        +"' class='form-control px100'/></td><td><input readOnly type='text' name='job_comment"+job_i
+        +"' class='form-control px100'/></td><td><input type='text' name='job_comment"+job_i
+        +"' id='job_comment"+job_i
+        +"' class='form-control px100'/></td><td><select name='job_comment"+job_i
         +"' id='job_comment"+job_i
         +"' class='form-control px100'/></td>");
 
       $('#job').append('<tr id="job_addr'+(job_i+1)+'"></tr>');
-
+      document.getElementById("qikan_valid"+job_i).add(new Option("有效","1"))
+      document.getElementById("qikan_valid"+job_i).add(new Option("无效","0"))
       job_i++; 
   });
      $("#job_delete_row").click(function(){
@@ -361,12 +388,16 @@ $(document).ready(function(){
         +"' class='form-control px150'/>"
         +"</td><td><input readOnly type='text' name='accupro_time"+accupro_i
         +"' id='accupro_time"+accupro_i
-        +"' class='form-control px100'/></td><td><input readOnly type='text' name='accupro_comment"+accupro_i
+        +"' class='form-control px100'/></td><td><input type='text' name='accupro_comment"+accupro_i
+        +"' id='accupro_comment"+accupro_i
+        +"' class='form-control px100'/></td><td><select name='accupro_comment"+accupro_i
         +"' id='accupro_comment"+accupro_i
         +"' class='form-control px100'/></td>");
 
       $('#accupro').append('<tr id="accupro_addr'+(accupro_i+1)+'"></tr>');
-      
+      document.getElementById("qikan_valid"+accupro_i).add(new Option("有效","1"))
+      document.getElementById("qikan_valid"+accupro_i).add(new Option("无效","0"))
+
       accupro_i++; 
   });
      $("#accupro_delete_row").click(function(){

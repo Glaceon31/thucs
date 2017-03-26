@@ -92,7 +92,6 @@ def scholarshipcancel():
 
 @app.route('/getscholarshipinfo/<username>', methods=['GET','POST'])
 def getscholarshipinfo(username):
-    print username
     jsondata = request.form
     data = immutabledict2dict(jsondata)
     #print data
@@ -107,16 +106,8 @@ def getscholarshipinfo(username):
         #result['info'] = 
         if tmp.has_key('scholarshipinfo'):
             result['scholarshipinfo'] = tmp['scholarshipinfo']
-            if tmp.has_key('reported'):
-                result['reported'] = tmp['reported']
-            else:
-                result['reported'] = 0
-            if tmp.has_key('zige'):
-                result['zige'] = tmp['zige']
-            else:
-                result['zige'] = 1
             result['success'] = 1
-        print 'get info:', result
+        #print result
         return json.dumps(result)
     except:
         traceback.print_exc()
@@ -157,7 +148,6 @@ def getkeyinfo(scholarshipinfo):
     return result
 
 def checktime(timestring, lastyear=''):
-    return True
     try:
         if lastyear == u'是':
             last = True
@@ -228,10 +218,6 @@ def getpapernum(scholarshipinfo):
         if not checktime(scholarshipinfo['conf_time'+str(num)],scholarshipinfo['conf_lastyear'+str(num)]):
             num += 1
             continue
-        if scholarshipinfo.has_key('conf_valid'+str(num)):
-            if scholarshipinfo['conf_valid'+str(num)] == '0':
-                num += 1
-                continue
         level = scholarshipinfo['conf_CCF'+str(num)]
         if score.has_key(level):
             if scholarshipinfo.has_key('conf_yizuo'+str(num)):
@@ -247,10 +233,6 @@ def getpapernum(scholarshipinfo):
         if not checktime(scholarshipinfo['qikan_time'+str(num)],scholarshipinfo['qikan_lastyear'+str(num)]):
             num += 1
             continue
-        if scholarshipinfo.has_key('qikan_valid'+str(num)):
-            if scholarshipinfo['qikan_valid'+str(num)] == '0':
-                num += 1
-                continue
         level = scholarshipinfo['qikan_CCF'+str(num)]
         if score.has_key(level):
             if scholarshipinfo.has_key('qikan_yizuo'+str(num)):
@@ -271,10 +253,6 @@ def getpatentnum(scholarshipinfo):
         if not checktime(scholarshipinfo['patent_time'+str(num)],scholarshipinfo['patent_lastyear'+str(num)]):
             num += 1
             continue
-        if scholarshipinfo.has_key('patent_valid'+str(num)):
-            if scholarshipinfo['patent_valid'+str(num)] == '0':
-                num += 1
-                continue
         result += 1
         num += 1
     return result
@@ -296,10 +274,6 @@ def getconferencescore(scholarshipinfo):
             num += 1
             wrongtime = True
             continue
-        if scholarshipinfo.has_key('conf_valid'+str(num)):
-            if scholarshipinfo['conf_valid'+str(num)] == '0':
-                num += 1
-                continue
         level_type = scholarshipinfo['conf_CCF'+str(num)]+' '+scholarshipinfo['conf_papertype'+str(num)]
         if scholarshipinfo.has_key('conf_yizuo'+str(num)):
             if scholarshipinfo['conf_yizuo'+str(num)] == u'是':
@@ -324,10 +298,6 @@ def getqikanscore(scholarshipinfo):
             num += 1
             wrongtime = True
             continue
-        if scholarshipinfo.has_key('qikan_valid'+str(num)):
-            if scholarshipinfo['qikan_valid'+str(num)] == '0':
-                num += 1
-                continue
         level = scholarshipinfo['qikan_CCF'+str(num)]+' '+scholarshipinfo['qikan_papertype'+str(num)]
         if score.has_key(level):
             if scholarshipinfo.has_key('qikan_yizuo'+str(num)):
@@ -350,10 +320,6 @@ def getpatentscore(scholarshipinfo):
             num += 1
             wrongtime = True
             continue
-        if scholarshipinfo.has_key('patent_valid'+str(num)):
-            if scholarshipinfo['patent_valid'+str(num)] == '0':
-                num += 1
-                continue
         if scholarshipinfo.has_key('patent_yizuo'+str(num)):
             if scholarshipinfo['patent_yizuo'+str(num)] == u'是':
                 result += 1
@@ -375,10 +341,6 @@ def getprojectscore(scholarshipinfo):
             num += 1
             wrongtime = True
             continue
-        if scholarshipinfo.has_key('project_valid'+str(num)):
-            if scholarshipinfo['project_valid'+str(num)] == '0':
-                num += 1
-                continue
         level = scholarshipinfo['project_type'+str(num)]
         if score.has_key(level):
             result+= score[level]
@@ -397,10 +359,6 @@ def getstanardscore(scholarshipinfo):
             num += 1
             wrongtime = True
             continue
-        if scholarshipinfo.has_key('standard_valid'+str(num)):
-            if scholarshipinfo['standard_valid'+str(num)] == '0':
-                num += 1
-                continue
         num += 1
         result += 2
     return min(2,result),wrongtime
@@ -438,10 +396,6 @@ def getjobscore(scholarshipinfo):
         except:
             months = 0
             print months
-        if scholarshipinfo.has_key('job_valid'+str(num)):
-            if scholarshipinfo['job_valid'+str(num)] == '0':
-                num += 1
-                continue
         if score.has_key(level):
             result+= int(1000*score[level]*months/12.0)/1000.0
         num += 1
@@ -461,10 +415,6 @@ def getaccuproscore(scholarshipinfo):
             num += 1
             wrongtime = True
             continue
-        if scholarshipinfo.has_key('accupro_valid'+str(num)):
-            if scholarshipinfo['accupro_valid'+str(num)] == '0':
-                num += 1
-                continue
         level = scholarshipinfo['accupro_accupro'+str(num)]
         if score.has_key(level):
             result+= score[level]
@@ -505,11 +455,6 @@ def getscholarshiplist(condition):
             if tmpuser.has_key('scholarshipinfo'):
                 scholarshipinfo = json.loads(tmpuser['scholarshipinfo'])
                 tmpresult = getkeyinfo(scholarshipinfo)
-                if tmpuser.has_key('reported'):
-                    tmpresult['reported'] = tmpuser['reported']
-                else:
-                    tmpresult['reported'] = 0
-                tmpresult['invalid'] = checkvalid(scholarshipinfo)
                 result.append(tmpresult)
                 result = sorted(result, key=lambda x:x[whichscore],reverse=True)
         print len(result)
@@ -517,14 +462,6 @@ def getscholarshiplist(condition):
     except:
         traceback.print_exc()
 
-def checkvalid(scholarshipinfo):
-    for key in scholarshipinfo:
-        if 'valid' in key:
-            print key, scholarshipinfo[key]
-            if scholarshipinfo[key] == '0':
-                print 111
-                return True
-    return False
 
 @app.route('/getnotify', methods=['GET','POST'])
 def getnotify():

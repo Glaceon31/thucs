@@ -1,5 +1,6 @@
 
-  <form class="form-horizontal" method='POST' action=''>
+
+  <form data-toggle="validator" class="form-horizontal" method='POST' action=''>
     <input type="text" placeholder="" class="input-xlarge" id="token" name="token" style="display:none">
     <fieldset>
       <div id="legend" class="">
@@ -21,7 +22,7 @@
           <!-- Text input-->
           <label class="control-label" for="input01">学号</label>
           <div class="controls">
-            <input type="text" placeholder="" class="input-xlarge" id="username" name="username">
+            <input type="number" placeholder="" class="input-xlarge" id="username" name="username">
             
           </div>
         </div>
@@ -246,6 +247,12 @@
             <th class="text-center">
               最后一年申请
             </th>
+            <th class="text-center" style="display: none;">
+              备注
+            </th>
+            <th class="text-center" style="display: none;">
+              
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -302,6 +309,12 @@
             <th class="text-center">
               最后一年申请
             </th>
+            <th class="text-center" style="display: none;">
+              备注
+            </th>
+            <th class="text-center" style="display: none;">
+              
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -345,6 +358,12 @@
             <th class="text-center">
               最后一年申请
             </th>
+            <th class="text-center" style="display: none;">
+              备注
+            </th>
+            <th class="text-center" style="display: none;">
+              
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -383,6 +402,12 @@
             <th class="text-center">
               最后一年申请
             </th>
+            <th class="text-center" style="display: none;">
+              备注
+            </th>
+            <th class="text-center" style="display: none;">
+              
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -417,6 +442,12 @@
             </th>
             <th class="text-center">
               最后一年申请
+            </th>
+            <th class="text-center" style="display: none;">
+              备注
+            </th>
+            <th class="text-center" style="display: none;">
+              
             </th>
           </tr>
         </thead>
@@ -457,6 +488,12 @@
             </th>
             <th class="text-center">
               最后一年申请
+            </th>
+            <th class="text-center" style="display: none;">
+              备注
+            </th>
+            <th class="text-center" style="display: none;">
+              
             </th>
           </tr>
         </thead>
@@ -501,6 +538,12 @@ d. 其它服务岗位。"><img class="icon" src="/static/question.jpg"/></a>
             <th class="text-center">
               总月数(填写整数)
             </th>
+            <th class="text-center" style="display: none;">
+              备注
+            </th>
+            <th class="text-center" style="display: none;">
+              
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -543,6 +586,12 @@ k. 非博士生必修环节社会实践校级金/银/铜奖支队成员（1.5分
             <th class="text-center">
               时间 <a data-toggle="tooltip" title="时间填写格式：2016/8/31"><img class="icon" src="/static/question.jpg"/></a>
             </th>
+            <th class="text-center" style="display: none;">
+              备注
+            </th>
+            <th class="text-center" style="display: none;">
+              
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -560,9 +609,10 @@ k. 非博士生必修环节社会实践校级金/银/铜奖支队成员（1.5分
     <textarea placeholder="" class="input-xlarge" id="otheraward" name="otheraward"></textarea>
 
     <br><br>
-  <input type='submit' name='提交'>
+  <button type='submit' name="提交">提交</button>
 
-  <button onclick='applycancel()' name='cancel' style="margin-left:100px">撤销申请</button>
+  
 
     </fieldset>
   </form>
+<button onclick='applycancel()' name='cancel' style="margin-left:100px">撤销申请</button>

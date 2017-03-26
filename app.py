@@ -11,7 +11,7 @@ from pymongo import MongoClient
 
 client = MongoClient(connect=False)
 
-db = client.thucs
+db = client.thucs2017
 
 
 
@@ -41,10 +41,13 @@ def modifypassword():
 def scholarship():
 	return render_template('scholarship.html')
 
-@app.route('/scholarshiplist')
+@app.route('/gongshi')
+def gongshi():
+	return render_template('gongshi.html')
+
+@app.route('/scholarshiplist/')
 def scholarshiplist():
-	slist=getscholarshiplist()
-	return render_template('scholarshiplist.html', slist=slist)
+	return render_template('scholarshiplist.html')
 
 @app.route('/scholarshipview/<username>')
 def scholarshipcheck(username):
@@ -57,7 +60,6 @@ def fonts(path):
 
 from user import *
 from scholarship import *
-from mail import *
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port = 7654)

@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
-from app import app, db
+from upload import app, db
 import traceback
 import json
 import datetime

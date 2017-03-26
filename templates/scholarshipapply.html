@@ -2,11 +2,12 @@
 <html>
 
   {% include 'header.html' %}
-  <script type="text/javascript" src="/static/scholarship.js"></script>
+  <script type="text/javascript" src="/static/scholarship.js?v=1.8"></script>
   <link rel="stylesheet" href="/static/scholarship.css" type="text/css">
   <script type="text/javascript">
   function init(){
     document.getElementById("viewapply").href="/scholarshipview/"+getCookie('usernamethu')
+    document.getElementById("apply").href="/scholarshipapply/"+getCookie('usernamethu')
     getbasicinfo()
     getscholarshipinfo()
   }

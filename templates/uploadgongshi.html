@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+  {% include 'header.html' %}
+  <script type="text/javascript">
+    function notify_submit(){
+
+    }
+  </script>>
+  <body class="loginregbody" onload="checklogin();">
+    <div class="container">
+        <form role="form" class="form-info" enctype=multipart/form-data id="applyform" name="applyform" action="/uploadinggongshi" method="POST">
+
+
+
+            <label for="name">上传公示</label>
+            密码 <input type="password" id="pass" name="pass"></input><br>
+            说明 <input type="text" id="description" name="description"></input>
+            <input type="file" name="file"/>
+
+          <button type="submit">提交</button>
+        </form>
+    </div>
+  </body>
+
+
+</html>
