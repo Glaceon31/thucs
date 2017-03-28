@@ -21,7 +21,7 @@
         notifyinfo = result[j]
         content = '<td>'+notifyinfo['description']+'</td>'
         content += '<td>'+notifyinfo['time']+'</td>'
-        content += '<td><a href="downloadnotify/'+notifyinfo['filename']+'">'+notifyinfo['filename']+'</a></td>'
+        content += '<td><a href="downloadgongshi/'+notifyinfo['filename']+'">'+notifyinfo['filename']+'</a></td>'
         //content = "<td>"+(parseInt(j)+1)+"</td>"
             $("#notifylist_addr"+j).html(content)
             $("#notifylist").append('<tr id="notifylist_addr'+(parseInt(j)+1)+'"></tr>')
@@ -50,12 +50,12 @@
       <div id="page-content-wrapper" class="container-fluid">
         
         <div class="span6" style="margin-left:10px;margin-top:10px">
-          通知列表
+          公示列表
           <table class="table table-bordered table-hover" id="notifylist">
         <thead>
           <tr >
             <th class="text-center">
-              通知
+              公示
             </th>
             <th class="text-center">
               时间
