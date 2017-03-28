@@ -54,7 +54,7 @@ def uploadinggongshi():
 	data = immutabledict2dict(jsondata)
 	result = {'success' :0}
 	try:
-		if data['pass'] != 'thucsyangongzu':
+		if data['pass'] != '11':
 			return u'密码错误'
 		file = request.files['file']
 		file.save(os.path.join('gongshi', file.filename))
