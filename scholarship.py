@@ -565,7 +565,8 @@ def getgongshi():
 @app.route('/downloadnotify/<filename>', methods=['GET','POST'])
 def downloadnotify(filename):
     try:
-        return send_from_directory(directory='notify',filename=filename, as_attachment=True)
+        print repr(filename.encode('utf-8'))
+        return send_from_directory(directory='notify',filename=filename.encode('utf-8'), as_attachment=True)
     except:
         traceback.print_exc()
         return u'后台错误'
@@ -573,7 +574,8 @@ def downloadnotify(filename):
 @app.route('/downloadgongshi/<filename>', methods=['GET','POST'])
 def downloadgongshi(filename):
     try:
-        return send_from_directory(directory='gongshi',filename=filename, as_attachment=True)
+        print repr(filename.encode('utf-8'))
+        return send_from_directory(directory='gongshi',filename=filename.encode('utf-8'), as_attachment=True)
     except:
         traceback.print_exc()
         return u'后台错误'
